@@ -7,14 +7,14 @@ Hugo static site for defreyssi.net, automatically deployed to Linode Object Stor
 This site uses Hugo with the Ananke theme. To run locally:
 
 ```bash
-# Install Hugo (already done in this project)
-# Hugo is installed to ~/bin/hugo
+# Install Hugo (if not already installed)
+sudo pacman -S hugo
 
 # Start development server
-~/bin/hugo server --buildDrafts
+hugo server --buildDrafts
 
 # Create new content
-~/bin/hugo new content posts/my-post.md
+hugo new content posts/my-post.md
 ```
 
 ## Deployment
