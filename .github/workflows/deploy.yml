@@ -40,13 +40,15 @@ jobs:
         env:
           LINODE_ACCESS_KEY: ${{ secrets.LINODE_ACCESS_KEY }}
           LINODE_SECRET_KEY: ${{ secrets.LINODE_SECRET_KEY }}
+          LINODE_CLUSTER: ${{ secrets.LINODE_CLUSTER }}
+          LINODE_BUCKET: ${{ secrets.LINODE_BUCKET }}
         run: |
-          cat > /home/runner/.s3cfg << 'EOF'
+          cat > /home/runner/.s3cfg << EOF
           [default]
           access_key = ${LINODE_ACCESS_KEY}
           secret_key = ${LINODE_SECRET_KEY}
           host_base = ${LINODE_CLUSTER}.linodeobjects.com
-          host_bucket = ${LINODE_BUCKET}.{$LINODE_CLUSTER}.linodeobjects.com
+          host_bucket = %(bucket)s.${LINODE_CLUSTER}.linodeobjects.com
           use_https = True
           signature_v2 = False
           EOF
