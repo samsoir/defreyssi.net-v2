@@ -1,0 +1,4 @@
+baseURL = 'https://defreyssi.net/'
+languageCode = 'en-us'
+title = 'defreyssi.net'
+theme = 'ananke'
