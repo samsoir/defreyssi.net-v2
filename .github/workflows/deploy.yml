@@ -43,6 +43,20 @@ jobs:
           LINODE_CLUSTER: ${{ vars.LINODE_CLUSTER }}
           LINODE_BUCKET: ${{ vars.LINODE_BUCKET }}
         run: |
+          # Debug: Check environment variables (without showing secrets)
+          echo "LINODE_CLUSTER: ${LINODE_CLUSTER}"
+          echo "LINODE_BUCKET: ${LINODE_BUCKET}"
+          echo "Access key length: ${#LINODE_ACCESS_KEY}"
+          echo "Secret key length: ${#LINODE_SECRET_KEY}"
+          
+          # Verify all required variables are set
+          if [ -z "${LINODE_ACCESS_KEY}" ] || [ -z "${LINODE_SECRET_KEY}" ] || [ -z "${LINODE_CLUSTER}" ] || [ -z "${LINODE_BUCKET}" ]; then
+            echo "ERROR: Missing required environment variables"
+            echo "Please check that secrets LINODE_ACCESS_KEY, LINODE_SECRET_KEY are set"
+            echo "Please check that variables LINODE_CLUSTER, LINODE_BUCKET are set"
+            exit 1
+          fi
+          
           cat > /home/runner/.s3cfg << EOF
           [default]
           access_key = ${LINODE_ACCESS_KEY}
@@ -53,14 +67,19 @@ jobs:
           signature_v2 = False
           EOF
           
-          # Debug: Check if config file was created
-          ls -la /home/runner/.s3cfg
-          echo "Config file contents:"
-          cat /home/runner/.s3cfg
+          echo "Configuration file created successfully"
       
       - name: Sync to Linode Object Storage
+        env:
+          LINODE_BUCKET: ${{ vars.LINODE_BUCKET }}
         run: |
-          s3cmd sync public/ s3://${{ vars.LINODE_BUCKET }}/ \
+          # Debug s3cmd configuration
+          echo "Using bucket: ${LINODE_BUCKET}"
+          s3cmd --version
+          s3cmd --config=/home/runner/.s3cfg ls
+          
+          # Sync to bucket
+          s3cmd --config=/home/runner/.s3cfg sync public/ s3://${LINODE_BUCKET}/ \
             --delete-removed \
             --no-mime-magic \
             --guess-mime-type \
@@ -68,7 +87,9 @@ jobs:
             --cf-invalidate
       
       - name: Set website configuration
+        env:
+          LINODE_BUCKET: ${{ vars.LINODE_BUCKET }}
         run: |
-          s3cmd ws-create s3://${{ vars.LINODE_BUCKET }} \
+          s3cmd --config=/home/runner/.s3cfg ws-create s3://${LINODE_BUCKET} \
             --ws-index=index.html \
             --ws-error=404.html || true
