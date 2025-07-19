@@ -43,10 +43,10 @@ jobs:
         run: |
           cat > /home/runner/.s3cfg << 'EOF'
           [default]
-          access_key = $LINODE_ACCESS_KEY
-          secret_key = $LINODE_SECRET_KEY
-          host_base = $LINODE_CLUSTER.linodeobjects.com
-          host_bucket = $LINODE_BUCKET.$LINODE_CLUSTER.linodeobjects.com
+          access_key = ${LINODE_ACCESS_KEY}
+          secret_key = ${LINODE_SECRET_KEY}
+          host_base = ${LINODE_CLUSTER}.linodeobjects.com
+          host_bucket = ${LINODE_BUCKET}.{$LINODE_CLUSTER}.linodeobjects.com
           use_https = True
           signature_v2 = False
           EOF
