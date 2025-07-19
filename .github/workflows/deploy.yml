@@ -73,18 +73,12 @@ jobs:
         env:
           LINODE_BUCKET: ${{ vars.LINODE_BUCKET }}
         run: |
-          # Debug s3cmd configuration
-          echo "Using bucket: ${LINODE_BUCKET}"
-          s3cmd --version
-          s3cmd --config=/home/runner/.s3cfg ls
-          
           # Sync to bucket
           s3cmd --config=/home/runner/.s3cfg sync public/ s3://${LINODE_BUCKET}/ \
             --delete-removed \
             --no-mime-magic \
             --guess-mime-type \
-            --acl-public \
-            --cf-invalidate
+            --acl-public
       
       - name: Set website configuration
         env:
