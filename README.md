@@ -4,11 +4,38 @@ Hugo static site for defreyssi.net, automatically deployed to Linode Object Stor
 
 ## Setup
 
-This site uses Hugo with the Ananke theme. To run locally:
+This site uses Hugo with the Ananke theme. 
+
+### Quick Start with Makefile
+
+```bash
+# Set up development environment
+make setup
+
+# Activate virtual environment  
+source venv/bin/activate
+
+# Set your YouTube API key
+export YOUTUBE_API_KEY="your-api-key-here"
+
+# Run development server with latest YouTube data
+make dev
+
+# Or run individual commands
+make test              # Run tests
+make fetch-youtube     # Update YouTube data
+make serve            # Start Hugo server
+make build            # Build production site
+```
+
+### Manual Setup
 
 ```bash
 # Install Hugo (if not already installed)
 sudo pacman -S hugo
+
+# Install Python dependencies
+pip install -r requirements.txt
 
 # Start development server
 hugo server --buildDrafts
