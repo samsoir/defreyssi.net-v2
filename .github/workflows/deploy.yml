@@ -1,0 +1,64 @@
+name: Build and Deploy to Linode Object Storage
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    if: github.event_name == 'push' || (github.event.pull_request.merged == true)
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.132.2'
+          extended: true
+      
+      - name: Build Hugo site
+        run: hugo --minify
+      
+      - name: Install s3cmd for Linode Object Storage
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y s3cmd
+      
+      - name: Configure s3cmd for Linode Object Storage
+        run: |
+          cat > ~/.s3cfg << EOF
+          [default]
+          access_key = ${{ secrets.LINODE_ACCESS_KEY }}
+          secret_key = ${{ secrets.LINODE_SECRET_KEY }}
+          host_base = ${{ secrets.LINODE_CLUSTER }}.linodeobjects.com
+          host_bucket = %(bucket)s.${{ secrets.LINODE_CLUSTER }}.linodeobjects.com
+          use_https = True
+          signature_v2 = False
+          EOF
+      
+      - name: Sync to Linode Object Storage
+        run: |
+          s3cmd sync public/ s3://${{ secrets.LINODE_BUCKET }}/ \
+            --delete-removed \
+            --no-mime-magic \
+            --guess-mime-type \
+            --acl-public \
+            --cf-invalidate
+      
+      - name: Set website configuration
+        run: |
+          s3cmd ws-create s3://${{ secrets.LINODE_BUCKET }} \
+            --ws-index=index.html \
+            --ws-error=404.html || true
