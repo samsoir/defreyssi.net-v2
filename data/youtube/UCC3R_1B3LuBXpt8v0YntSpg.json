@@ -1,0 +1,257 @@
+{
+  "channel_title": "Four Star Captain",
+  "channel_id": "UCC3R_1B3LuBXpt8v0YntSpg",
+  "videos": [
+    {
+      "id": "9yoSa0eFSQQ",
+      "title": "Cross The Pond Westbound 2025 | VATSIM Event BCN \u2708\ufe0f IAD",
+      "description": "Join us live on VATSIM in Barcelona as we prepare our United Boeing 777-200ER for a transatlantic flight to Washinton Dulles International with full ATC coverage and 1300 other virtual pilots. Follow along as we setup the aircraft for departure, brief our mission, get clearances and operate the ETOPS flight across the pond.\n\nFlight time today is expected to be just short of 9 hours.\n\nIf unfamiliar, Cross The Pond is the largest online virtual flying event that takes place twice a year on Vatsim. In H1 the event is westbound, with flights from Europe and Africa heading to North and Central America. In H2 the event reverses direction and all flights head eastbound.\n\n\ud83d\udccd Route\nGRAUS M601 BLV M190 LASKU DCT VES DCT PITAX 46N020W 46N030W 46N040W 45N050W RAFIN VITOL KB66E SPDEY Q167 KALDA SAWED THHMP CAVLR6\n\n\ud83d\udcbb Simulator\nX-Plane 12 - https://www.x-plane.com \n\n\ud83d\udee9\ufe0f Aircraft\nBoeing 777-200ER - FlightFactor https://www.flgihtfactor.aero \n\n\ud83c\udf0e Scenery\nLEBL Barcelona - https://www.aerosoft.com/en/shop/flight/x-plane/x-plane-11/sceneries/xp-europe/3152/airport-barcelona-xp \nKIAD Washington Dulles International - https://store.x-plane.org/KIAD--Washington-Dulles-International-Airport_p_1574.html \n\n\ud83d\udcbf Add-ons\nxPilot Vatsim Client - https://docs.xpilot-project.org \n\n\ud83d\udd79\ufe0f Flight Hardware\nVirpil VPC Flight Pedals - https://virpil-controls.us.com/vpc-ace-flight-pedals.html\nThrustmaster TCA Boeing Throttle - https://www.thrustmaster.com/en-us/products/tca-yoke-pack-boeing-edition/\nThrustmaster TCA Boeing Yoke\n\n\ud83d\udda5\ufe0f Computer Specs\nAMD Ryzen 9 7950X\n64GB DDR5 G-Skill Memory\nGigabyte Aorus Xtreme X670E Mobo\nNvidia G-Force RTX 4090 Founders Edition\nLG UltraWide Monitor, 34\u201d 5K2K 10-bit HDR 600nits\nWindows 11 Pro\n\nCPU and GPU are cooled by independent custom loop using EKWB parts. CPU, GPU and Memory are overclocked.",
+      "published_at": "2025-04-27T04:57:23Z",
+      "thumbnail": "https://i.ytimg.com/vi/9yoSa0eFSQQ/maxresdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=9yoSa0eFSQQ",
+      "is_live_stream": true,
+      "live_status": "completed"
+    },
+    {
+      "id": "LpYJDvwXB6M",
+      "title": "The Art Of Flight Simulation | 2025",
+      "description": "Flight simulation is simply stunning in 2025. What a time to be alive. This short film celebrates the type of flying I enjoy when flying in the virtual world, whether online or not.\n\nI started using Flight Simulators over 30 years ago as a much younger person. If I could show my 8 year old self how things would look in the future, my mind would be blown \ud83e\udd2f ! Just imagine what flight simulation will feel like in another 30 years.\n\nThis film is a sequel of sorts to another experiement I posted onto Vimeo in 2016, which was also showcasing the best of flight simulation in that era \u2013 how things have progressed. Those who have seen the 2016 version will notice a number of nods to that piece in this version.\n\nArt of Flight | 2016 https://vimeo.com/194935864 \n\n\ud83d\udcbb Simulators\nMicrosoft Flight Simulator 2020 https://www.flightsimulator.com \nX-Plane 12 https://www.x-plane.com",
+      "published_at": "2025-01-11T09:11:13Z",
+      "thumbnail": "https://i.ytimg.com/vi/LpYJDvwXB6M/hqdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=LpYJDvwXB6M",
+      "is_live_stream": false,
+      "live_status": null
+    },
+    {
+      "id": "f8wXsbsGcZY",
+      "title": "Flight dispatching tutorial | SimBrief to Aircraft init using the ACARS datalink | Toliss A321",
+      "description": "In this video I dive deep into the world of flight planning and dispatching and then loading flight plans with wind data into an Airbus via the ACARS datalink, which significantly reduces the amount of time in the cockpit spent setting up your flight.\n\nBy the end of this tutorial you will be able to;\n\n* Connect Toliss Aircraft to your SimBrief account\n* Save airframes to your SimBrief account\n* Use FlightAware to create real world flight operations\n* Initialize a flight in Airbus Aircraft using ACARS datalink\n* Load a flight plan from SimBrief via ACARS datalink\n* Load wind data from SimBrief via ACARS datalink\n* Load Take-Off performance data from ACARS\n\nThank you Simon for the question that prompted this video!\n\n00:00 - Introduction\n02:11 - Connect the Toliss to your SimBrief Pilot ID\n07:28 - Real world operations in the sim\n09:32 - Flight dispatching tools\n11:38 - A very brief Cost Index overview\n12:29 - Real World Flight Details\n12:54 - SimBrief Introduction\n15:08 - Creating a new airframe from a template\n24:22 - Create a new flight plan\n34:20 - Pilot briefing\n37:32 - Cockpit preparation\n41:11 - Flight initialization in the ATSU via ACARS\n45:13 - Obtain ATIS and METAR in the ATSU\n46:35 - Flight plan departure setup\n49:08 - Obtain trip wind data via ACARS\n52:22 - Flight plan verification \n54:48 - Obtain Take-off performance data from ACARS\n58:27 - Closing remarks\n\n\ud83d\udccdTools\nSimBrief Dispatching - https://www.simbrief.com/home/\nToliss SimBrief Saved Airframe Profiles - https://forums.x-plane.org/index.php?/forums/topic/202921-simbrief-saved-airframes/\nFlightAware - https://www.flightaware.com\n\n\ud83d\udcbb Simulator\nX-Plane 12 https://www.x-plane.com\n\n\ud83d\udee9\ufe0f Aircraft\nAirbus A321 - Toliss https://store.x-plane.org/Airbus-A321-XP12-by-Toliss_p_1632.html\n\n\ud83c\udf0e Scenery\nLOWW Vienna International Airport GAYA Simulations - https://www.gaya-simulations.com/products/vienna",
+      "published_at": "2024-02-05T08:00:18Z",
+      "thumbnail": "https://i.ytimg.com/vi/f8wXsbsGcZY/hqdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=f8wXsbsGcZY",
+      "is_live_stream": false,
+      "live_status": null
+    },
+    {
+      "id": "NYEA-D3nTM0",
+      "title": "miniCockpit Airbus FCU add-on for flight simulator",
+      "description": "Brief review of the miniCockpit miniFCU add-on now generally available to all that wish to purchase it. This hardware add-on for both Microsoft Flight Simulator and X-Plane provides the complete functionality of the Airbus FCU in supported aircraft.\n\nThis review looks at the hardware, software and how to mount it on a VESA compatible stand.\n\n00:00 - Introduction\n00:26 - Disclosures\n00:55 - Experience with hardware add-ons\n01:24 - What is an FCU?\n02:28 - Unboxing and hardware review\n03:46 - VESA Mount Install\n04:46 - Software\n05:15 - One gripe about the supplied USB cable\n05:37 - Summary and closing remarks\n\n\ud83d\udd79\ufe0f Flight Hardware\nminiCockpit miniFCU - https://www.minicockpit.com\nWearson WS-03A Adjustable LCD TV Stand Folding Metal Monitor Desk Stand With VESA Hole - https://www.amazon.com/dp/B00XUF2GBI?ref=ppx_yo2ov_dt_b_product_details&th=1\n\n\ud83c\udfb5 Music\nAnime - Magiksolo\nSoul River - Daniel Brown\nUnwind - Mansij",
+      "published_at": "2024-01-19T08:30:05Z",
+      "thumbnail": "https://i.ytimg.com/vi/NYEA-D3nTM0/hqdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=NYEA-D3nTM0",
+      "is_live_stream": false,
+      "live_status": null
+    },
+    {
+      "id": "d7ZV7US9we4",
+      "title": "\ud83c\uddf3\ud83c\uddff ANZ 447 Wellington to Auckland | Figuring out the landing flare of the \u2708\ufe0f Fenix A320  | MSFS",
+      "description": "The Fenix A320 on final has never felt right when compared to other Airbus aircraft. For me the flare/ground effect has always felt too severe.\n\nI return to this aircraft after a long break and several updates to see if things have changed.\n\nJoin us on this Air New Zealand A320 shuttle service on the North Island from Wellington to Auckland.\n\n\ud83d\udccdVolanta Flight Track https://fly.volanta.app/flights/5983c8a8-0629-4b8b-9144-f2304329ce55\n\n00:00:00 - Introduction\n00:01:55 - Aircraft preparation\n00:22:30 - Pushback and engine start\n00:29:30 - Taxi\n00:30:32 - Takeoff and climb out\n00:39:00 - Cruise\n00:48:30 - Arrival\n00:53:24 - Approach\n00:55:48 - Landing\n01:01:49 - Closing remarks\n01:02:47 - Tweaking flight-stick sensitivity settings\n\n\ud83d\udcbb Simulator\nMSFS - https://www.flightsimulator.com\n\n\ud83d\udee9\ufe0f Aircraft\nAirbus A320 - Fenix https://fenixsim.com\n\n\ud83c\udf0e Scenery\nNZWN Wellington INTL Airport - https://www.flightbeam.net/product-page2/nzwn-for-microsoft-flight-simulator\nNZAA Auckland International Airport - https://www.flightbeam.net/product-page/nzaa-auckland-international-for-microsoft-flight-simulator\n\n\ud83d\udcbf Add-ons\n//42 Flow Pro - https://parallel42.com/products/flow-pro\nvPilot Vatsim Client - https://vpilot.rosscarlson.dev\n\n\ud83d\udd79\ufe0f Flight Hardware\nVirpil Mongoos T-50CM3 Base - https://virpil-controls.us.com/vpc-mongoost-50cm3-base.html\nVirpil VPC Flight Pedals - https://virpil-controls.us.com/vpc-ace-flight-pedals.html\nFlightSimProjects A320 Sidestick for Virpil - https://www.fsprojects.eu\nThrustmaster TCA Airbus Throttle - https://www.thrustmaster.com/products/tca-officer-pack-airbus-edition/\nXbox One Controller - https://www.microsoft.com/en-us/store/collections/xboxcontrollers \nminiCockpit miniFCU - https://www.minicockpit.com\n\n\ud83d\udda5\ufe0f Computer Specs\nAMD Ryzen 9 7950X\n64GB DDR5 G-Skill Memory\nGigabyte Aorus Xtreme X670E Mobo\nNvidia G-Force RTX 4090 Founders Edition\nLG UltraWide Monitor, 34\u201d 5K2K 10-bit HDR 600nits\nWindows 11 Pro\n\nCPU and GPU are cooled by independent custom loop using EKWB parts. CPU, GPU and Memory are overclocked.",
+      "published_at": "2024-01-10T00:43:38Z",
+      "thumbnail": "https://i.ytimg.com/vi/d7ZV7US9we4/hqdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=d7ZV7US9we4",
+      "is_live_stream": false,
+      "live_status": null
+    },
+    {
+      "id": "4SMhN3ADwzQ",
+      "title": "\ud83c\udfa5 How I setup my Custom Cameras in MSFS without add-ons | Setup guide and cheat sheet",
+      "description": "Part 2: Custom Camera Setup in MSFS\n\nI share my standard Custom Camera keyboard short cuts that I have used across multiple flight simulators for the last ten years. These key bindings enable me to focus on flying and not where a particular panel in my aircraft is.\n\nIdeally, everyone should have their own view key binding system that is consistent and scalable across aircraft and simulators, so that muscle memory takes over controlling your perspective when flying. This is the system I use and I'm sharing it with you all.\n\n\ud83d\udcc4 MSFS Custom Camera Cheat Sheet https://docs.google.com/document/d/1_iO0SFMuqJm0kkoHlYqZuPMOiKsedIiD3W8r6wXoWlU/\n\n00:00 - Introduction\n01:10 - Custom Camera Key Bindings Config\n03:12 - View setup in Boeing 737-800\n04:42 - View setup in TBM 850\n05:45 - Camera Movement\n07:07 - Closing remarks\n\n\n\ud83d\udcbb Simulator\nMSFS - https://www.flightsimulator.com\n\n\ud83c\udf0e Scenery\nKJAC Jackson Hole Airport for MSFS - https://axonos.gumroad.com/l/KJAC2020?layout=profile \n\n\ud83d\udee9\ufe0f Aircraft\nBoeing 737-800 - PMDG https://pmdg.com/pmdg-737-800-for-microsoft-flight-simulator/\nTBM 850 - Blacksquare https://www.justflight.com/product/black-square-tbm-850",
+      "published_at": "2024-01-06T09:00:03Z",
+      "thumbnail": "https://i.ytimg.com/vi/4SMhN3ADwzQ/maxresdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=4SMhN3ADwzQ",
+      "is_live_stream": false,
+      "live_status": null
+    },
+    {
+      "id": "Uf8F6cAvSEg",
+      "title": "\ud83c\udfa5 How I setup my views in X-Plane 12 without addons | Setup guide and cheat sheet",
+      "description": "I share my standard quick view keyboard short cuts that I have used across multiple flight simulators for the last ten years. These key bindings enable me to focus on flying and not where a particular panel in my aircraft is.\n\nIdeally, everyone should have their own view key binding system that is consistent and scalable across aircraft and simulators, so that muscle memory takes over controlling your perspective when flying. This is the system I use and I'm sharing it with you all.\n\n\ud83d\udcc4 X-Plane Quick Look Cheat Sheet https://docs.google.com/document/d/1kJwtuQv_mT4bh8H4BDOx1h7E-S43BkjiPQ5HQ7eOzDM/edit\n\n00:00 - Introduction\n01:04 - Standard view schema\n02:29 - View setup in Airbus A319\n05:20 - View setup in Dash-8 Q400\n08:43 - View setup in Diamond DA42\n08:18 - Closing remarks\n\n\ud83d\udcbb Simulator\nX-Plane 12 https://www.x-plane.com\n\n\ud83c\udf0e Scenery\nKJAC Jackson Hole Airport for X-Plane 12 - https://axonos.gumroad.com/l/KJACXP12?layout=profile \nAutoOrtho - https://kubilus1.github.io/autoortho/0.7.1/\n\n\ud83d\udee9\ufe0f Aircraft\nAirbus A319 - Toliss https://store.x-plane.org/Airbus-A319-XP12-by-Toliss-_p_1631.html\nDash-8 Q400 - FlyJSim https://store.x-plane.org/FlyJSim-Q4XP_p_1511.html \nDiamond DA42 - aerobask https://store.x-plane.org/Diamond-DA42-NG_p_1695.html",
+      "published_at": "2024-01-04T09:00:20Z",
+      "thumbnail": "https://i.ytimg.com/vi/Uf8F6cAvSEg/maxresdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=Uf8F6cAvSEg",
+      "is_live_stream": false,
+      "live_status": null
+    },
+    {
+      "id": "66v-lbPQ8nQ",
+      "title": "Flying snowboarders \ud83c\udfc2 to Big Sky, MT \ud83c\udfd4\ufe0f | Delta Airlines Ops | A20N KLAX to KBZN",
+      "description": "We take command of the DAL3669 service from Los Angeles to Bozeman, MT, a popular route in winter that transports winter sports enthusiasts from Southern California to the Big Sky mountain resort in Montana.\n\nToday we are piloting the Airbus A320neo. This specific airframe was recently delivered from Airbus to Delta. It still has that new plane smell on board.\n\n00:00 Introduction\n01:59 Cockpit preparation\n15:50 Pushback, engine start and taxi\n31:06 Takeoff and climb\n44:04 Cruise (abbreviated)\n45:43 Descent (abbreviated)\n48:50 Landing\n55:56 Shutdown\n\n\ud83d\udccdVolanta Flight Track https://fly.volanta.app/flights/e6a94fe3-70c9-4dd7-a351-7b8a8f3d59dd\n\n\ud83c\udfb5 Music\nKingdom Come \u2013 Theevs\nInvincible \u2013 IamDayLight\n\n\ud83d\udcbb Simulator\nX-Plane 12 -  https://www.x-plane.com\n\n\ud83d\udee9\ufe0f Aircraft\nAirbus A320neo - Toliss https://store.x-plane.org/Airbus-A320-Neo-by-Toliss-XP12-and-XP11_p_1717.html\n\n\ud83c\udf0e Scenery\nKLAX - Los Angeles International HD - https://store.x-plane.org/KLAX--Los-Angeles-International-HD_p_836.html\nKBZN Bozeman Yellowstone International - https://forums.x-plane.org/index.php?/files/file/44767-kbzn-bozeman-yellowstone-international/\nAutoOrtho - https://kubilus1.github.io/autoortho/0.7.1/\n\n\ud83d\udcbf Add-ons\nxPilot Vatsim Client - https://docs.xpilot-project.org\nKOSP Project Sounds - https://store.x-plane.org/KOSP-PROJECT--A319-A320-A321-Full-Soundscape_p_1773.html\nX-Camera - https://stickandrudderstudios.com/x-camera/\nX-KeyPad - https://stickandrudderstudios.com/x-keypad-for-x-keys/\nWebFMC Pro - https://store.x-plane.org/WebFMC-Pro-XP12_p_1662.html\n\n\ud83d\udd79\ufe0f Flight Hardware\nVirpil Mongoos T-50CM3 Base - https://virpil-controls.us.com/vpc-mongoost-50cm3-base.html\nVirpil VPC Flight Pedals - https://virpil-controls.us.com/vpc-ace-flight-pedals.html\nFlightSimProjects A320 Sidestick for Virpil - https://www.fsprojects.eu\nThrustmaster TCA Airbus Throttle - https://www.thrustmaster.com/products/tca-officer-pack-airbus-edition/\nminiCockpit miniFCU - https://www.minicockpit.com\nStreamdeck + / StreamDeck XL - https://www.elgato.com/us/en/s/welcome-to-stream-deck\n\n\ud83d\udda5\ufe0f Computer Specs\nAMD Ryzen 9 7950X\n64GB G-Skill Memory\nGigabyte Aorus Xtreme X670E Mobo\nNvidia G-Force RTX 4090 Founders Edition\n\nCPU and GPU are cooled by independent custom loop using EKWB parts",
+      "published_at": "2024-01-01T09:00:03Z",
+      "thumbnail": "https://i.ytimg.com/vi/66v-lbPQ8nQ/hqdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=66v-lbPQ8nQ",
+      "is_live_stream": false,
+      "live_status": null
+    },
+    {
+      "id": "gJJAtJbiM7c",
+      "title": "[MSFS] Christmas Day Chill flying around my old stomping grounds in a Commanche",
+      "description": "Just chilling before the craziness of Christmas day!",
+      "published_at": "2023-12-25T22:49:39Z",
+      "thumbnail": "https://i.ytimg.com/vi/gJJAtJbiM7c/maxresdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=gJJAtJbiM7c",
+      "is_live_stream": true,
+      "live_status": "completed"
+    },
+    {
+      "id": "5xng7ylALA0",
+      "title": "[VATSIM] Last Minute Shopping, \u2708\ufe0f flying Prime packages from Chicago to Minneapolis on xmas eve \ud83c\udf84\ud83e\uddd1\u200d\ud83c\udf84",
+      "description": "Join me as I try (and maybe fail) to redeem myself after Friday's disastrous FNO where a rogue pilot, go around and then complete control loss resulted in a terrible disaster outside of Chicago.\n\nTonight we will try and take the most dangerous plane there is back from the wreckage heap in Chicago to Minneapolis in the annual Vatsim Last Minute Shopping Event.\n\nlight Simulator: \n- Microsoft Flight Simulator 2020 (https://www.flightsimulator.com/)\n\nAircraft:\n- PMDG B737-800 (https://pmdg.com/pmdg-737-800-for-microsoft-flight-simulator/)\n\nScenery:\n- FS Dream Team Chicago O'Hare International (https://www.fsdreamteam.com/products_kordv2_msfs.html)\n- Flightbeam Minneapolis St Paul International (https://www.flightbeam.net/product-page2/kmsp-for-microsoft-flight-simulator)\n\nVatsim Client:\n- vPilot (https://vpilot.rosscarlson.dev/)",
+      "published_at": "2023-12-25T03:03:06Z",
+      "thumbnail": "https://i.ytimg.com/vi/5xng7ylALA0/hqdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=5xng7ylALA0",
+      "is_live_stream": true,
+      "live_status": "completed"
+    },
+    {
+      "id": "lo7L9uxKm0Q",
+      "title": "[VATSIM] FNO Home for the Holidays Chicagoland event",
+      "description": "As the year comes to a close, families are travelling home to celebrate their observed holidays.  Airlines and Air Traffic Control work hand in hand to ensure they get to where they need to go safely and on time.  Join ZAU at O'Hare International Airport and Midway International Airport in Chicago for our annual Home For The Holidays event.  Even if you're not from the city or surrounding suburbs, come visit us in Chicago and swing by Navy Pier for their annual Winter Wonderland exhibit with a giant tree and indoor skating rink, Michigan Avenue for all the sights and the Bean, then head back to either airport to finish your connection home.",
+      "published_at": "2023-12-23T14:50:30Z",
+      "thumbnail": "https://i.ytimg.com/vi/lo7L9uxKm0Q/hqdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=lo7L9uxKm0Q",
+      "is_live_stream": true,
+      "live_status": "completed"
+    },
+    {
+      "id": "xv_yptgFYJM",
+      "title": "[VATSIM] FNO Cornfield Crossfire 2, Spirit Ops from Chicago to Cincinnati",
+      "description": "There's more to the midwest than meets the eye! Join us for some of the most exciting flying you'll find among the cornfields!\n\nJump onboard and fight for your seat on this Spirit A320neo between the Second City and Cincinnati.",
+      "published_at": "2023-12-09T22:47:11Z",
+      "thumbnail": "https://i.ytimg.com/vi/xv_yptgFYJM/maxresdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=xv_yptgFYJM",
+      "is_live_stream": true,
+      "live_status": "completed"
+    },
+    {
+      "id": "bzqnO7Evsrk",
+      "title": "[VATSIM Event] Cross The Land Americas 2023",
+      "description": "Cross the Land is happy to introduce/present our first edition of Cross The Lands : Americas!  On December 2nd 2023, depart from a North American Airport and arrive at a South American Airport. \n\nJoin us as we pick up Avianca Airlines operations from Phoenix to Bogata, Colombia.\n\nFlight Simulator: \n- X-Plane 12 [12.0.8-rc1] (https://www.x-plane.com)\n\nAircraft:\n- Toliss A320neo (https://store.x-plane.org/Airbus-A320-Neo-by-Toliss-XP12-and-XP11_p_1717.html)\n\nScenery:\n- AutoOrtho (https://kubilus1.github.io/autoortho/0.7.1/)\n- MisterX KPHX (https://forums.x-plane.org/index.php?/files/file/26819-kphx-phoenix-sky-harbor-international/)\n- Taimodels SKBO X12 (https://store.x-plane.org/SKBO--Bogota-El-Dorado-International-Airport_p_1515.html)\n\nVatsim Client:\n- X-Pilot (https://docs.xpilot-project.org)",
+      "published_at": "2023-12-02T22:32:27Z",
+      "thumbnail": "https://i.ytimg.com/vi/bzqnO7Evsrk/maxresdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=bzqnO7Evsrk",
+      "is_live_stream": true,
+      "live_status": "completed"
+    },
+    {
+      "id": "OtiEwsYdcsU",
+      "title": "SXM Princess Juliana \ud83d\udeec arrivals and departures \ud83d\udeeb captured from Maho Beach, Sint Maarten",
+      "description": "During my trip to the Caribbean island of Saint Martin \ud83c\uddeb\ud83c\uddf7 / Sint Maarten \ud83c\uddf3\ud83c\uddf1 over Thanksgiving, I took myself to the world famous Maho Beach just feet away from the threshold of Princess Juliana Internatinonal Airport\u2019s Runway 10. Situated on the beach with a cold drink, we spent a sunny afternoon watching many arrivals and departures from the warm golden sands, dipping our toes in the aqua blue Caribbean Sea.\n\n\u2708\ufe0f Aircraft Spotted\n\n- Airbus A330-300 (Air France, KLM)\n- Airbus A320-200 (JetBlue)\n- Airbus A320neo (Spirit)\n- Boeing 737-600 (United)\n- Boeing 757-200 (Delta)\n- Cessna 208 Caravan\n- ATR-42\n- DeHavilland Twin Otter\n- Britten Islander\n- Challenger 650  \n\nSit back on the sandy beach, grab a cold drink and watch all of the arrivals and departures from this little airport in the heart of paradise.\n\nThis video was shot entirely on an iPhone 15 Pro Max using the camera app, and edited and finalized using Davinci Resolve on the iPad. This is the first time I have produced a video entirely on mobile operating systems.",
+      "published_at": "2023-11-25T19:46:04Z",
+      "thumbnail": "https://i.ytimg.com/vi/OtiEwsYdcsU/maxresdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=OtiEwsYdcsU",
+      "is_live_stream": false,
+      "live_status": null
+    },
+    {
+      "id": "0lFXtw-EVGs",
+      "title": "[VATSIM Event] Over the River and Through the Woods FNO",
+      "description": "VATSIM Friday Night Operations takes us to the Great Lakes for the Over the River and through the Woods event.\n\nJoin us as we pick up Delta Airlines operations from MSP to DTW and back again, helping families reach loved ones in and around the Great Lakes.",
+      "published_at": "2023-11-18T03:20:34Z",
+      "thumbnail": "https://i.ytimg.com/vi/0lFXtw-EVGs/maxresdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=0lFXtw-EVGs",
+      "is_live_stream": true,
+      "live_status": "completed"
+    },
+    {
+      "id": "psh68qHozgg",
+      "title": "JetBlue A320neo LA to Sacramento",
+      "description": "Chilling post cross the pond with a Cali flight to the state capital",
+      "published_at": "2023-11-01T18:55:32Z",
+      "thumbnail": "https://i.ytimg.com/vi/psh68qHozgg/maxresdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=psh68qHozgg",
+      "is_live_stream": true,
+      "live_status": "completed"
+    },
+    {
+      "id": "4b-OrzyIMJ8",
+      "title": "Cross The Pond Eastbound 2023 - JetBlue A321neo LR Boston to London Heathrow",
+      "description": "Join me as I virtually pilot an Airbus A321neo Long Range from Boston Logan International Airport to London Heathrow, alongside thousands of other virtual pilots with live ATC on Vatsim taking part in Cross The Pond Eastbound 2023. Will I make it safely? Or run out of fuel? Or will the simulator crash? Hop on board on Saturday as we navigate 2500 miles of ocean.\n\nCross the Pond is a twice-yearly event featuring virtual air traffic controlling divisions on both sides of the Atlantic Ocean providing a complete ATC service, supporting over 2000 virtual pilots cross the pond.\n\nI have participated in the Cross The Pond event for many years, starting in 2016 flying the PMDG Boeing 777 from Frankfurt to Miami. Since then I have flown the event from Paris to Newark, New York to London, Atlanta to Vienna to name a few.",
+      "published_at": "2023-10-28T21:49:09Z",
+      "thumbnail": "https://i.ytimg.com/vi/4b-OrzyIMJ8/maxresdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=4b-OrzyIMJ8",
+      "is_live_stream": true,
+      "live_status": "completed"
+    },
+    {
+      "id": "Wn5qZgoCf2o",
+      "title": "Easyjet Ops, Birmingham to Faro in an A321 Neo on VATSIM",
+      "description": "Testing setup ahead of CTP Eastbound 2023",
+      "published_at": "2023-09-28T08:05:40Z",
+      "thumbnail": "https://i.ytimg.com/vi/Wn5qZgoCf2o/maxresdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=Wn5qZgoCf2o",
+      "is_live_stream": true,
+      "live_status": "completed"
+    },
+    {
+      "id": "iA5GMBQ7mAI",
+      "title": "Easyjet Ops, Edinburgh - Birmingham shuttle in an A320 Neo",
+      "description": "Testing setup ahead of CTP Eastbound 2023",
+      "published_at": "2023-09-27T17:49:36Z",
+      "thumbnail": "https://i.ytimg.com/vi/iA5GMBQ7mAI/maxresdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=iA5GMBQ7mAI",
+      "is_live_stream": true,
+      "live_status": "completed"
+    },
+    {
+      "id": "dMSRB-F8Ck4",
+      "title": "[XP12] Easyjet Ops, Gatwick - Edinburgh shuttle in a A320 Neo",
+      "description": "Testing setup ahead of CTP Eastbound 2023",
+      "published_at": "2023-09-26T18:01:37Z",
+      "thumbnail": "https://i.ytimg.com/vi/dMSRB-F8Ck4/maxresdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=dMSRB-F8Ck4",
+      "is_live_stream": true,
+      "live_status": "completed"
+    },
+    {
+      "id": "3Tv2ARA5sLQ",
+      "title": "Snowboarding: Atmospheric river delivers endless champagne powder at Northstar Resort, California",
+      "description": "During the month of January 2023, an atmospheric river delivered a record breaking amount of water to California in the first two weeks of the year. This video was made during the second weekend of January, with storm numbers 10 through 12 arriving in the Sierras.\n\nBase depth was well over 120\" at Northstar at the beginning of the weekend and over a foot of snow fell while I was there.\n\nAlthough the atmospheric river has caused considerable damage to large parts of California due to sink holes, mud slides and other storm damage, for winter sports enthusiasts the 22/23 season just received a huge boost in snow that will likely last well into April.\n\nShot Using:\n- Sony A7SIII\n- DJI Osma 3\n- iPhone 13 Pro Max\n- insta360 X3\n\nPost Production:\n- Davinci Resolve\n- insta360 Studio\n\nMusic Credits:\n- \"Feast of Starlight\", Elad Perez\n- \"The Giants\", Evgeny Bardyuzha\n\nMusic Licensed by:\n- Artist.io\n\nSnowboard:\n- Capita Mega Mercury 2023 with Union Atlas Pro 2023 Bindings",
+      "published_at": "2023-01-20T20:49:04Z",
+      "thumbnail": "https://i.ytimg.com/vi/3Tv2ARA5sLQ/maxresdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=3Tv2ARA5sLQ",
+      "is_live_stream": true,
+      "live_status": "completed"
+    },
+    {
+      "id": "VF0o95Sicmw",
+      "title": "Northstar Resort: Snowboarding from top of the Comstock chair to the bottom",
+      "description": "Snowboarding at Northstar, California. Riding down from the top of the new Comstock six chair express to the bottom of the chair, via West Ridge, Lookout Road, Upper Pioneer and then Lower Pioneer.\n\nThis was just to test the Insta360 X3 camera in action. Riding was a little stiff due to getting comfortable with the stance holding the camera. Conditions were crispy and icy on this day at about 0\u00b0C/32\u00b0F.\n\nSnowboard: Capita Mercury\nBindings: Union Force",
+      "published_at": "2022-12-25T03:38:39Z",
+      "thumbnail": "https://i.ytimg.com/vi/VF0o95Sicmw/maxresdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=VF0o95Sicmw",
+      "is_live_stream": false,
+      "live_status": null
+    },
+    {
+      "id": "GIpYVf-Z-kk",
+      "title": "Flying the Pattern at DuPage in the MSFS default Cessna 172",
+      "description": "This is the first in a series of videos covering the fundamentals of flying in Microsoft Flight Simulator. As in real life, learning to take off, land and fly a controlled pattern are skills that will help any virtual pilot even in commercial jets.\n\nIn this video we take the default Cessna 172 out for some pattern work at DuPage (KDPA) airport, just to the west of Chicago. We will practice setting up the aircraft for flying; flying the pattern at DuPage off Runway 20R; and communication with the tower during the exercise.\n\nDuPage is the airport where I did my initial flight training and flew the pattern on runway 20R for many, many, many hours!",
+      "published_at": "2022-12-07T16:00:07Z",
+      "thumbnail": "https://i.ytimg.com/vi/GIpYVf-Z-kk/maxresdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=GIpYVf-Z-kk",
+      "is_live_stream": false,
+      "live_status": null
+    },
+    {
+      "id": "GNZFNAv-Ju8",
+      "title": "Debrief Cross The Pond Eastbound 2022; Featuring the ToLiss A340-600 in X-Plane 12 Beta",
+      "description": "Cross The Pond Eastbound 2022 took place on October 22, concluding the 2022 season of VATSIM events over the Atlantic.\n\nIn this video I debrief my experience flying the Eastbound event in October 2022 and discuss what I think is good about the event, and some areas that could be improved upon for greater experience.\n\nTo help navigate the discussion, the debrief is separated into the following sections;\n\n\u2022 Preparation for the event\n\u2022 Event Itself\n\u2022 Simulator State of the Union for the event\n\nLinks;\n\n\u2022 https://ctp.vatsim.net - Cross The Pond\n\u2022 https://tinyurl.com/bdv3arbm - SELCAL specification\n\u2022 https://www.x-plane.com - X-Plane\n\u2022 https://beta.xpilot-project.org - xPilot Vatsim Client for X-Plane\n\u2022 https://toliss.com/products/#a346 - ToLiss A340-600",
+      "published_at": "2022-11-30T16:00:11Z",
+      "thumbnail": "https://i.ytimg.com/vi/GNZFNAv-Ju8/maxresdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=GNZFNAv-Ju8",
+      "is_live_stream": false,
+      "live_status": null
+    },
+    {
+      "id": "939EkIjPcks",
+      "title": "Cross The Pond Eastbound 2022 - Taking the A340-600 to Vienna in X-Plane 12. What could go wrong?",
+      "description": "CTP Eastbound 2022. This time around taking the ToLiss A340-600 in Lufthansa livery across the pond from Atlanta to Vienna.\n\nThis will be the first time I have taken the A346 across the pond during this event and will also be the first time I am using Xplane 12 for a major Vatsim event.\n\nDuring this flight we will be chatting about the state of flight sim as we go into 2023.\n\nUnfortunately we did not make it to Vienna. Skip to the end to find out what happened!",
+      "published_at": "2022-10-22T22:49:44Z",
+      "thumbnail": "https://i.ytimg.com/vi/939EkIjPcks/maxresdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=939EkIjPcks",
+      "is_live_stream": true,
+      "live_status": "completed"
+    }
+  ],
+  "channel_slug": "four-star-captain"
+}

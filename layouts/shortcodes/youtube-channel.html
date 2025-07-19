@@ -1,0 +1,110 @@
+{{ $channelId := .Get 0 }}
+{{ $channelData := index .Site.Data.youtube $channelId }}
+
+{{ if $channelData }}
+    <div class="youtube-channel-shortcode">
+        <h3>Recent Videos</h3>
+        <div class="videos-list">
+            {{ range first 6 $channelData.videos }}
+                <div class="video-item">
+                    <a href="{{ .url }}" target="_blank" rel="noopener" class="video-link">
+                        <img src="{{ .thumbnail }}" alt="{{ .title }}" class="video-thumb">
+                        <div class="video-details">
+                            <h4>{{ .title }}</h4>
+                            <time datetime="{{ .published_at }}">
+                                {{ dateFormat "Jan 2, 2006" .published_at }}
+                            </time>
+                        </div>
+                    </a>
+                </div>
+            {{ end }}
+        </div>
+        <p class="view-all">
+            <a href="/youtube/{{ $channelData.channel_slug | default $channelId }}/">View all videos →</a>
+        </p>
+    </div>
+{{ else }}
+    <p>YouTube channel data not available.</p>
+{{ end }}
+
+<style>
+.youtube-channel-shortcode {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.videos-list {
+    display: grid;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.video-item {
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 1rem;
+}
+
+.video-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.video-link {
+    display: flex;
+    gap: 1rem;
+    text-decoration: none;
+    color: inherit;
+}
+
+.video-link:hover h4 {
+    color: #FF0000;
+}
+
+.video-thumb {
+    width: 120px;
+    height: 68px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.video-details h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    line-height: 1.3;
+    transition: color 0.2s ease;
+}
+
+.video-details time {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.view-all {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.view-all a {
+    color: #0066cc;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.view-all a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .video-thumb {
+        width: 80px;
+        height: 45px;
+    }
+    
+    .video-details h4 {
+        font-size: 0.9rem;
+    }
+}
+</style>

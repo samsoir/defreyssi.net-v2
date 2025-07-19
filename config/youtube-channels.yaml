@@ -1,0 +1,9 @@
+# YouTube channels configuration
+# Replace with your actual channel IDs
+channels:
+  - channel_id: UC9HFPMZKwRj13Y324GxFpMg
+    name: Sam does a thing 
+    description: Random things that I post to YouTube
+  - channel_id: UCC3R_1B3LuBXpt8v0YntSpg
+    name: Four Star Captain
+    description: Flight Simulation videos that focus on flying online on either VATSIM or PilotEdge and attempt, sometimes less successfully, to follow real world procedures and operations. Most of my videos are commercial aviation focused, but I do like to take up smaller aircraft for VFR flights every once in a while.

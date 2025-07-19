@@ -1,0 +1,17 @@
+{
+  "channel_title": "Test Channel",
+  "channel_id": "UCtest123",
+  "videos": [
+    {
+      "id": "video1",
+      "title": "Test Video 1",
+      "description": "Description 1",
+      "published_at": "2023-01-01T12:00:00Z",
+      "thumbnail": "https://example.com/thumb1.jpg",
+      "url": "https://www.youtube.com/watch?v=video1",
+      "is_live_stream": false,
+      "live_status": null
+    }
+  ],
+  "channel_slug": "test-channel"
+}

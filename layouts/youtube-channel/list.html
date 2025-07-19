@@ -1,0 +1,223 @@
+{{ define "main" }}
+<div class="youtube-channel">
+    <header class="channel-header">
+        <h1>{{ .Title }}</h1>
+        {{ if .Params.channel_title }}
+            <p class="channel-description">
+                Latest videos from <strong>{{ .Params.channel_title }}</strong>
+            </p>
+        {{ end }}
+        {{ if .Params.video_count }}
+            <p class="video-count">{{ .Params.video_count }} videos</p>
+        {{ end }}
+    </header>
+
+    {{ $channelId := .Params.channel_id }}
+    {{ $channelData := index .Site.Data.youtube $channelId }}
+    
+    {{ if $channelData }}
+        <div class="videos-grid">
+            {{ range $channelData.videos }}
+                <article class="video-card">
+                    <div class="video-thumbnail">
+                        <a href="{{ .url }}" target="_blank" rel="noopener">
+                            <img src="{{ .thumbnail }}" alt="{{ .title }}" loading="lazy">
+                            <div class="play-overlay">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="video-info">
+                        <h3 class="video-title">
+                            <a href="{{ .url }}" target="_blank" rel="noopener">
+                                {{ .title }}
+                            </a>
+                            {{ if .is_live_stream }}
+                                <span class="live-badge {{ .live_status }}">
+                                    {{ if eq .live_status "live" }}🔴 LIVE{{ else if eq .live_status "upcoming" }}📅 Upcoming{{ else }}📺 Stream{{ end }}
+                                </span>
+                            {{ end }}
+                        </h3>
+                        
+                        <time class="video-date" datetime="{{ .published_at }}">
+                            {{ dateFormat "January 2, 2006" .published_at }}
+                        </time>
+                        
+                        {{ if .description }}
+                            <p class="video-description">
+                                {{ .description | truncate 150 }}
+                            </p>
+                        {{ end }}
+                    </div>
+                </article>
+            {{ end }}
+        </div>
+    {{ else }}
+        <p>No videos found for this channel.</p>
+    {{ end }}
+</div>
+
+<style>
+.youtube-channel {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.channel-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.channel-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.channel-description {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.video-count {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.video-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.video-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.video-thumbnail {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+}
+
+.video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.7);
+    color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.video-thumbnail:hover .play-overlay {
+    opacity: 1;
+}
+
+.video-info {
+    padding: 1.5rem;
+}
+
+.video-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+.video-title a {
+    color: #333;
+    text-decoration: none;
+}
+
+.video-title a:hover {
+    color: #FF0000;
+}
+
+.video-date {
+    color: #666;
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.video-description {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.live-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
+    text-transform: uppercase;
+}
+
+.live-badge.live {
+    background: #ff4444;
+    color: white;
+    animation: pulse 2s infinite;
+}
+
+.live-badge.upcoming {
+    background: #4488ff;
+    color: white;
+}
+
+.live-badge.completed {
+    background: #666;
+    color: white;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+    .youtube-channel {
+        padding: 1rem;
+    }
+    
+    .videos-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .channel-header h1 {
+        font-size: 2rem;
+    }
+}
+</style>
+{{ end }}

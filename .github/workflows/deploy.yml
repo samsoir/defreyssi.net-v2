@@ -28,6 +28,25 @@ jobs:
           hugo-version: '0.148.1'
           extended: true
       
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      
+      - name: Install Python dependencies
+        run: |
+          pip install -r requirements.txt
+      
+      - name: Run tests
+        run: |
+          python -m pytest tests/ -v
+      
+      - name: Fetch YouTube data
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: |
+          python scripts/fetch-youtube-data.py
+      
       - name: Build Hugo site
         run: hugo --minify
       
