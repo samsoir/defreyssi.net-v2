@@ -38,7 +38,8 @@ jobs:
       
       - name: Configure s3cmd for Linode Object Storage
         run: |
-          cat > ~/.s3cfg << EOF
+          mkdir -p ~/.config
+          cat > ~/.s3cfg << 'EOF'
           [default]
           access_key = ${{ secrets.LINODE_ACCESS_KEY }}
           secret_key = ${{ secrets.LINODE_SECRET_KEY }}
@@ -47,6 +48,11 @@ jobs:
           use_https = True
           signature_v2 = False
           EOF
+          
+          # Debug: Check if config file was created
+          ls -la ~/.s3cfg
+          echo "Config file contents:"
+          cat ~/.s3cfg
       
       - name: Sync to Linode Object Storage
         run: |
