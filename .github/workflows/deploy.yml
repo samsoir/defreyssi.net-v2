@@ -40,8 +40,8 @@ jobs:
         env:
           LINODE_ACCESS_KEY: ${{ secrets.LINODE_ACCESS_KEY }}
           LINODE_SECRET_KEY: ${{ secrets.LINODE_SECRET_KEY }}
-          LINODE_CLUSTER: ${{ secrets.LINODE_CLUSTER }}
-          LINODE_BUCKET: ${{ secrets.LINODE_BUCKET }}
+          LINODE_CLUSTER: ${{ vars.LINODE_CLUSTER }}
+          LINODE_BUCKET: ${{ vars.LINODE_BUCKET }}
         run: |
           cat > /home/runner/.s3cfg << EOF
           [default]
@@ -60,7 +60,7 @@ jobs:
       
       - name: Sync to Linode Object Storage
         run: |
-          s3cmd sync public/ s3://${{ secrets.LINODE_BUCKET }}/ \
+          s3cmd sync public/ s3://${{ vars.LINODE_BUCKET }}/ \
             --delete-removed \
             --no-mime-magic \
             --guess-mime-type \
@@ -69,6 +69,6 @@ jobs:
       
       - name: Set website configuration
         run: |
-          s3cmd ws-create s3://${{ secrets.LINODE_BUCKET }} \
+          s3cmd ws-create s3://${{ vars.LINODE_BUCKET }} \
             --ws-index=index.html \
             --ws-error=404.html || true
