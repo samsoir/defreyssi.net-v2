@@ -37,14 +37,16 @@ jobs:
           sudo apt-get install -y s3cmd
       
       - name: Configure s3cmd for Linode Object Storage
+        env:
+          LINODE_ACCESS_KEY: ${{ secrets.LINODE_ACCESS_KEY }}
+          LINODE_SECRET_KEY: ${{ secrets.LINODE_SECRET_KEY }}
         run: |
-          mkdir -p ~/.config
           cat > ~/.s3cfg << 'EOF'
           [default]
           access_key = ${{ secrets.LINODE_ACCESS_KEY }}
           secret_key = ${{ secrets.LINODE_SECRET_KEY }}
-          host_base = ${{ secrets.LINODE_CLUSTER }}.linodeobjects.com
-          host_bucket = %(bucket)s.${{ secrets.LINODE_CLUSTER }}.linodeobjects.com
+          host_base = ${{ env.LINODE_CLUSTER }}.linodeobjects.com
+          host_bucket = ${{ env.LINODE_BUCKET }}.${{ env.LINODE_CLUSTER }}.linodeobjects.com
           use_https = True
           signature_v2 = False
           EOF
