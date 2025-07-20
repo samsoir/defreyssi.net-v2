@@ -104,6 +104,12 @@ clean: ## Clean build artifacts and caches
 	find . -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
 	@echo "$(GREEN)✓ Clean complete$(NC)"
 
+clean-test-data: ## Clean any leaked test data from production directories
+	@echo "$(YELLOW)Cleaning test data leaks...$(NC)"
+	@rm -f data/youtube/UCtest123.json data/youtube/UCempty.json 2>/dev/null || true
+	@rm -rf content/youtube/test-channel content/youtube/empty-channel 2>/dev/null || true
+	@echo "$(GREEN)✓ Test data cleaned$(NC)"
+
 clean-all: clean ## Clean everything including venv
 	@echo "$(YELLOW)Removing virtual environment...$(NC)"
 	rm -rf $(VENV_DIR)

@@ -28,10 +28,35 @@ class TestYouTubeFetcher(unittest.TestCase):
         self.api_key = "test_api_key"
         self.fetcher = YouTubeFetcher(self.api_key)
         self.temp_dir = tempfile.mkdtemp()
+        # Store original working directory
+        self.original_cwd = os.getcwd()
+        # Change to temp directory for isolated testing
+        os.chdir(self.temp_dir)
         
     def tearDown(self):
         """Clean up test fixtures."""
+        # Return to original directory
+        os.chdir(self.original_cwd)
+        # Clean up temp directory
         shutil.rmtree(self.temp_dir)
+        
+        # Clean up any test files that might have leaked to the project directory
+        project_data_dir = os.path.join(self.original_cwd, 'data', 'youtube')
+        if os.path.exists(project_data_dir):
+            test_files = ['UCtest123.json', 'UCempty.json']
+            for test_file in test_files:
+                test_path = os.path.join(project_data_dir, test_file)
+                if os.path.exists(test_path):
+                    os.remove(test_path)
+                    
+        # Clean up any test content directories
+        project_content_dir = os.path.join(self.original_cwd, 'content', 'youtube')
+        if os.path.exists(project_content_dir):
+            test_dirs = ['test-channel', 'empty-channel']
+            for test_dir in test_dirs:
+                test_path = os.path.join(project_content_dir, test_dir)
+                if os.path.exists(test_path):
+                    shutil.rmtree(test_path)
     
     def create_mock_channel_response(self):
         """Create a mock YouTube API channel response."""
@@ -369,10 +394,11 @@ class TestContentGeneration(TestYouTubeFetcher):
         channel_data = self.create_test_channel_data()
         channel_slug = 'test-channel'
         
-        self.fetcher.generate_hugo_content(channel_data, self.temp_dir, channel_slug)
+        # Use 'content' relative to current directory (temp directory)
+        self.fetcher.generate_hugo_content(channel_data, 'content', channel_slug)
         
         # Check that content directory was created
-        content_dir = Path(self.temp_dir) / 'youtube' / channel_slug
+        content_dir = Path('content') / 'youtube' / channel_slug
         self.assertTrue(content_dir.exists())
         
         # Check that index file was created
@@ -425,7 +451,7 @@ class TestContentGeneration(TestYouTubeFetcher):
             }
         ]
         
-        self.fetcher.generate_hugo_content(channel_data, self.temp_dir, 'empty-channel')
+        self.fetcher.generate_hugo_content(channel_data, 'content', 'empty-channel')
         
         # Should create content
         data_file = Path('data') / 'youtube' / 'UCempty.json'
