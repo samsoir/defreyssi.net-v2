@@ -1,0 +1,39 @@
+{{ define "main" }}
+<div class="page-header">
+    <div class="container">
+        <h1>{{ .Title }}</h1>
+        {{ with .Content }}
+        <div class="page-description">
+            {{ . }}
+        </div>
+        {{ end }}
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="container">
+        {{ if .Pages }}
+        <div class="posts-list">
+            {{ range .Pages }}
+            <article class="post-summary">
+                <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+                {{ if .Date }}
+                <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">
+                    {{ .Date.Format "January 2, 2006" }}
+                </time>
+                {{ end }}
+                {{ with .Summary }}
+                <div class="post-excerpt">
+                    {{ . }}
+                </div>
+                {{ end }}
+                <a href="{{ .Permalink }}" class="read-more">Read more →</a>
+            </article>
+            {{ end }}
+        </div>
+        {{ else }}
+        <p>No content found.</p>
+        {{ end }}
+    </div>
+</div>
+{{ end }}

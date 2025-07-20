@@ -4,7 +4,7 @@ Hugo static site for defreyssi.net, automatically deployed to Linode Object Stor
 
 ## Setup
 
-This site uses Hugo with the Ananke theme. 
+This site uses Hugo with a custom theme called "Maison de Freyssinet". 
 
 ### Quick Start with Makefile
 
@@ -53,7 +53,7 @@ The site automatically deploys to Linode Object Storage when:
 The deployment process includes:
 1. **Testing** - Runs comprehensive unit tests for YouTube integration
 2. **YouTube data fetch** - Pulls latest videos from configured channels
-3. **Hugo build** - Generates static site with minification
+3. **Hugo build** - Generates static site with custom theme and minification
 4. **Upload to Linode** - Syncs files to object storage with public ACL
 
 ### Required GitHub Secrets
@@ -125,4 +125,33 @@ The site automatically fetches and displays videos from configured YouTube chann
 
 ## Theme
 
-This site uses the [Ananke theme](https://github.com/theNewDynamic/gohugo-theme-ananke) as a git submodule.
+This site uses a custom Hugo theme called **"Maison de Freyssinet"** located in `themes/maison-de-freyssinet/`.
+
+### Theme Features
+
+- **Custom design** tailored for personal branding and YouTube integration
+- **Responsive layout** optimized for mobile and desktop
+- **YouTube integration** with dedicated channel pages and video cards
+- **Clean typography** using modern system fonts
+- **Modular structure** with reusable partials and layouts
+- **Performance optimized** with minimal CSS and JavaScript
+
+### Theme Development
+
+To customize the theme:
+
+```bash
+# Edit styles
+themes/maison-de-freyssinet/static/css/style.css
+
+# Modify layouts
+themes/maison-de-freyssinet/layouts/
+
+# Update partials
+themes/maison-de-freyssinet/layouts/partials/
+
+# Add assets
+themes/maison-de-freyssinet/static/
+```
+
+The theme is designed to be easily customizable while maintaining the YouTube integration functionality.

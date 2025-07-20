@@ -1,0 +1,48 @@
+{{ define "main" }}
+<div class="home-page">
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>{{ .Site.Title }}</h1>
+                {{ with .Site.Params.hero_text }}
+                <p class="hero-description">{{ . }}</p>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+
+    {{ if .Content }}
+    <section class="home-content">
+        <div class="container">
+            {{ .Content }}
+        </div>
+    </section>
+    {{ end }}
+
+    <!-- Recent YouTube Videos -->
+    {{ range .Site.Data.youtube }}
+    {{ $channel := . }}
+    <section class="recent-videos">
+        <div class="container">
+            <h2>Latest from {{ .channel_title }}</h2>
+            {{ with .videos }}
+            <div class="video-preview">
+                {{ range first 3 . }}
+                <article class="video-card">
+                    <a href="{{ .url }}" target="_blank" rel="noopener">
+                        <img src="{{ .thumbnail }}" alt="{{ .title }}" loading="lazy">
+                        <h3>{{ .title }}</h3>
+                        <time datetime="{{ .published_at }}">{{ dateFormat "January 2, 2006" .published_at }}</time>
+                    </a>
+                </article>
+                {{ end }}
+            </div>
+            {{ end }}
+            <p class="view-all">
+                <a href="/youtube/{{ $channel.channel_slug }}/">View all videos from {{ $channel.channel_title }} →</a>
+            </p>
+        </div>
+    </section>
+    {{ end }}
+</div>
+{{ end }}

@@ -1,0 +1,25 @@
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-info">
+                <p>&copy; {{ now.Year }} {{ .Site.Title }}. All rights reserved.</p>
+                {{ with .Site.Params.footer_text }}
+                <p>{{ . | markdownify }}</p>
+                {{ end }}
+            </div>
+            
+            <div class="footer-links">
+                {{ if .Site.Params.youtube_channels }}
+                <div class="social-links">
+                    <h4>YouTube Channels</h4>
+                    <ul>
+                        {{ range .Site.Data.youtube }}
+                        <li><a href="https://youtube.com/channel/{{ .channel_id }}" target="_blank" rel="noopener">{{ .channel_title }}</a></li>
+                        {{ end }}
+                    </ul>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </div>
+</footer>

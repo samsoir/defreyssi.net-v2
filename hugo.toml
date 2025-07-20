@@ -1,4 +1,11 @@
 baseURL = 'https://defreyssi.net/'
 languageCode = 'en-us'
 title = 'defreyssi.net'
-theme = 'ananke'
+theme = 'maison-de-freyssinet'
+
+[params]
+  description = "Personal website and YouTube content by Sam de Freyssinet"
+  author = "Sam de Freyssinet"
+  hero_text = "Welcome to my digital home"
+  footer_text = "Built with [Hugo](https://gohugo.io/) and custom YouTube integration"
+  youtube_channels = true

@@ -1,0 +1,24 @@
+<header class="site-header">
+    <div class="container">
+        <div class="header-content">
+            <div class="site-branding">
+                <h1 class="site-title">
+                    <a href="{{ .Site.BaseURL }}" rel="home">{{ .Site.Title }}</a>
+                </h1>
+                {{ with .Site.Params.tagline }}
+                <p class="site-description">{{ . }}</p>
+                {{ end }}
+            </div>
+            
+            <nav class="main-navigation" role="navigation">
+                <ul class="nav-menu">
+                    <li><a href="{{ .Site.BaseURL }}">Home</a></li>
+                    <li><a href="/youtube/">YouTube</a></li>
+                    {{ range .Site.Menus.main }}
+                    <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+                    {{ end }}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>

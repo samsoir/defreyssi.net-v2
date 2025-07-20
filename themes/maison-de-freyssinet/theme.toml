@@ -1,0 +1,12 @@
+name = "Maison de Freyssinet"
+license = "MIT"
+licenselink = "https://github.com/samsoir/defreyssi.net-v2/LICENSE"
+description = "Custom theme for defreyssi.net with YouTube integration"
+homepage = "https://defreyssi.net/"
+tags = ["personal", "blog", "youtube", "responsive"]
+features = ["youtube-integration", "responsive", "dark-mode-ready"]
+min_version = "0.140.0"
+
+[author]
+  name = "Sam de Freyssinet"
+  homepage = "https://defreyssi.net/"
