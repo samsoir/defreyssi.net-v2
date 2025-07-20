@@ -229,6 +229,9 @@ make test
 # Run tests with coverage report
 make test-coverage
 
+# Run tests with coverage validation (fails if below 85%)
+make test-coverage-ci
+
 # Run tests verbosely  
 make test-verbose
 
@@ -244,11 +247,20 @@ make test-match PATTERN=embed        # Embed processing tests
 
 ### Test Coverage
 
+- **Current Coverage**: 93% (maintained automatically via CI)
+- **Minimum Required**: 85% (builds fail below this threshold)
 - **YouTube Integration**: 14 tests covering API parsing, duplicate filtering, live stream detection, error handling
 - **Bluesky Integration**: 20 tests covering AT Protocol API, post filtering, embed processing, infinite loop prevention
 - **Configuration**: Tests for proper config file handling and error cases
 - **Infinite Loop Prevention**: Tests for cursor validation, recursion limits, and malformed response handling
 - **Data Generation**: Tests for Hugo data file creation and validation
+
+### Continuous Integration
+
+The project uses GitHub Actions with automatic coverage validation:
+- **All pushes and PRs** trigger comprehensive test suites
+- **Coverage below 85%** fails the build automatically
+- **Multiple Python versions** (3.11, 3.12) tested for compatibility
 
 ## Development Workflow
 
