@@ -2,48 +2,80 @@
 
 Hugo static site for defreyssi.net with social media integration, automatically deployed to Linode Object Storage.
 
-## Features
+[![Test Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen)](TESTING.md)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](#continuous-integration)
+[![Hugo](https://img.shields.io/badge/hugo-0.148.1-blue)](https://gohugo.io/)
 
-- **Custom Hugo Theme** - "Maison de Freyssinet" theme designed for personal branding
-- **YouTube Integration** - Automatically fetches and displays latest videos from configured channels
-- **Bluesky Integration** - Shows recent posts from Bluesky using AT Protocol
-- **Automated Deployment** - GitHub Actions workflow with testing and deployment to Linode Object Storage
-- **Comprehensive Testing** - Unit tests for all social media integrations
+## Table of Contents
 
-## Setup
+- [🚀 Quick Start](#-quick-start)
+- [✨ Features](#-features)
+- [🔧 Setup](#-setup)
+- [🏗️ Development](#️-development)
+- [🚀 Deployment](#-deployment)
+- [📚 Documentation](#-documentation)
 
-This site uses Hugo with a custom theme called "Maison de Freyssinet". 
-
-### Quick Start with Makefile
+## 🚀 Quick Start
 
 ```bash
-# Set up development environment
+# One-time setup
 make setup
 
 # Activate virtual environment  
 source venv/bin/activate
 
-# Set your API keys and credentials
+# Set your API keys (optional for development)
 export YOUTUBE_API_KEY="your-youtube-api-key"
 export BLUESKY_USERNAME="your-handle.bsky.social"
 export BLUESKY_APP_PASSWORD="your-bluesky-app-password"
 
-# Run development server with all social media data
+# Start development server with all features
 make dev
-
-# Or run individual commands
-make test              # Run tests
-make fetch-youtube     # Update YouTube data
-make fetch-bluesky     # Update Bluesky data
-make fetch-all         # Update all social media data
-make serve             # Start Hugo server
-make build             # Build production site
 ```
 
-### Manual Setup
+Visit `http://localhost:1313` to see your site!
+
+## ✨ Features
+
+### 🎨 Custom Hugo Theme
+- **"Maison de Freyssinet"** theme designed for personal branding
+- **Responsive design** optimized for mobile and desktop
+- **Performance optimized** with minimal CSS and JavaScript
+
+### 📺 YouTube Integration
+- **Automatic video fetching** from configured channels
+- **Duplicate filtering** and smart content management
+- **Live stream detection** with status badges
+- **SEO optimized** static content generation
+
+### 🦋 Bluesky Integration  
+- **AT Protocol support** with App Password security
+- **Smart filtering** (original posts only, no reposts/replies)
+- **Rich content support** (links, images, quote posts)
+- **Infinite loop prevention** with robust pagination
+
+### 🛡️ Quality Assurance
+- **93% test coverage** with automated validation
+- **CI/CD pipeline** with quality gates
+- **Multiple Python versions** tested (3.11, 3.12)
+
+## 🔧 Setup
+
+### Prerequisites
+
+- **Hugo** (0.148.1+)
+- **Python** (3.11+)
+- **Make** (for development commands)
+
+### Basic Setup
+
+<details>
+<summary>📖 Detailed Setup Instructions (click to expand)</summary>
+
+#### Manual Installation
 
 ```bash
-# Install Hugo (if not already installed)
+# Install Hugo (Arch Linux)
 sudo pacman -S hugo
 
 # Install Python dependencies
@@ -51,233 +83,154 @@ pip install -r requirements.txt
 
 # Start development server
 hugo server --buildDrafts
-
-# Create new content
-hugo new content posts/my-post.md
 ```
 
-## Deployment
+#### API Configuration
+
+1. **YouTube Setup:**
+   - Get API key from [Google Cloud Console](https://console.cloud.google.com/)
+   - Enable YouTube Data API v3
+   - Configure channels in `config/youtube-channels.yaml`
+
+2. **Bluesky Setup:**
+   - Generate App Password at [Bluesky Settings](https://bsky.app/settings/app-passwords)
+   - Configure handle in `config/bluesky-config.yaml`
+
+</details>
+
+### Environment Variables
+
+```bash
+# Required for fetching live data
+export YOUTUBE_API_KEY="your-youtube-api-key"
+export BLUESKY_USERNAME="your-handle.bsky.social"
+export BLUESKY_APP_PASSWORD="your-bluesky-app-password"
+```
+
+## 🏗️ Development
+
+### Common Commands
+
+```bash
+# Development workflow
+make setup           # Initial setup
+make test           # Run tests
+make dev            # Fetch data + serve
+make build          # Production build
+
+# Testing
+make test-coverage  # Coverage report
+make test-match PATTERN=bluesky  # Specific tests
+
+# Cleanup
+make clean          # Clean build artifacts
+```
+
+See the [Contributing Guide](CONTRIBUTING.md) for detailed development workflow.
+
+## 🚀 Deployment
+
+### Automatic Deployment
 
 The site automatically deploys to Linode Object Storage when:
-- Changes are pushed to the `main` branch
-- Pull requests are merged into `main`
+- ✅ Changes pushed to `main` branch
+- ✅ All tests pass (≥85% coverage required)
+- ✅ Social media data updated
+- ✅ Site built and optimized
 
-The deployment process includes:
-1. **Testing** - Runs comprehensive unit tests for all social media integrations
-2. **Social media data fetch** - Pulls latest videos from YouTube and posts from Bluesky
-3. **Hugo build** - Generates static site with custom theme and minification
-4. **Upload to Linode** - Syncs files to object storage with public ACL
+### Required Secrets
 
-### Required GitHub Secrets
+Configure in GitHub repository settings:
 
-Configure these secrets in your GitHub repository settings:
+**Secrets:**
+- `LINODE_ACCESS_KEY` / `LINODE_SECRET_KEY` 
+- `YOUTUBE_API_KEY`
+- `BLUESKY_USERNAME` / `BLUESKY_APP_PASSWORD`
 
-- `LINODE_ACCESS_KEY` - Your Linode Object Storage access key
-- `LINODE_SECRET_KEY` - Your Linode Object Storage secret key  
-- `YOUTUBE_API_KEY` - Your YouTube Data API v3 key
-- `BLUESKY_USERNAME` - Your Bluesky handle (e.g., `yourname.bsky.social`)
-- `BLUESKY_APP_PASSWORD` - Your Bluesky App Password (NOT your main password)
+**Variables:**
+- `LINODE_CLUSTER` (e.g., `us-east-1`)
+- `LINODE_BUCKET` (your bucket name)
 
-### Required GitHub Variables
+<details>
+<summary>🔧 Manual Deployment Setup (click to expand)</summary>
 
-Configure these variables in your GitHub repository settings:
+### Linode Object Storage Setup
 
-- `LINODE_CLUSTER` - Your Linode cluster (e.g., `us-east-1`)
-- `LINODE_BUCKET` - Your bucket name for the website
+1. Create bucket in Linode Object Storage
+2. Generate access keys in Linode Cloud Manager  
+3. Add secrets to GitHub repository
+4. Workflow automatically configures static website hosting
 
-### Setting up Linode Object Storage
-
-1. Create a bucket in Linode Object Storage
-2. Generate access keys in the Linode Cloud Manager
-3. Add the secrets to your GitHub repository
-4. The workflow will automatically configure the bucket for static website hosting
-
-## YouTube Integration
-
-The site automatically fetches and displays videos from configured YouTube channels during the build process.
-
-### Setup YouTube Integration
-
-1. **Get a YouTube Data API key:**
-   - Go to [Google Cloud Console](https://console.cloud.google.com/)
-   - Create a new project or select existing one
-   - Enable the YouTube Data API v3
-   - Create credentials (API key)
-   - Add the API key as `YOUTUBE_API_KEY` secret in GitHub
-
-2. **Configure your channels:**
-   - Edit `config/youtube-channels.yaml`
-   - Replace the placeholder channel IDs with your actual YouTube channel IDs
-   - Find your channel ID in YouTube Studio → Settings → Channel → Advanced settings
-
-3. **Local development:**
-   ```bash
-   # Install Python dependencies
-   pip install -r requirements.txt
-   
-   # Set your API key
-   export YOUTUBE_API_KEY="your-api-key-here"
-   
-   # Run tests (optional)
-   python -m pytest tests/ -v
-   
-   # Fetch YouTube data
-   python scripts/fetch-youtube-data.py
-   
-   # Build site
-   hugo server --buildDrafts
-   ```
-
-### YouTube Features
-
-- **Duplicate filtering** - Removes duplicate videos automatically
-- **Live stream detection** - Shows badges for live/upcoming/completed streams  
-- **Smart filtering** - Removes old abandoned "upcoming" streams (>7 days)
-- **Clean URLs** - Uses channel names instead of IDs (`/youtube/channel-name/`)
-- **Responsive design** - Mobile-friendly video cards with thumbnails
-- **SEO optimized** - Static content for search engine indexing
-
-## Bluesky Integration
-
-The site automatically fetches and displays your latest Bluesky posts on the homepage using the AT Protocol.
-
-### Setup Bluesky Integration
-
-1. **Generate a Bluesky App Password:**
-   - Go to [Bluesky Settings → App Passwords](https://bsky.app/settings/app-passwords)
-   - Create a new App Password (give it a descriptive name like "Website Integration")
-   - **Important**: Use the App Password, NOT your main account password
-
-2. **Configure your Bluesky handle:**
-   - Edit `config/bluesky-config.yaml`
-   - Replace `your-actual-handle.bsky.social` with your real Bluesky handle
-   - Adjust `max_posts` if you want more or fewer posts displayed
-
-3. **Local development:**
-   ```bash
-   # Set your credentials
-   export BLUESKY_USERNAME="your-handle.bsky.social"
-   export BLUESKY_APP_PASSWORD="your-app-password"
-   
-   # Fetch Bluesky data
-   make fetch-bluesky
-   
-   # Or use the Python script directly
-   python scripts/fetch-bluesky-data.py
-   
-   # Build site with all social media data
-   make serve-with-all
-   ```
-
-4. **Add GitHub secrets:**
-   - Add `BLUESKY_USERNAME` and `BLUESKY_APP_PASSWORD` to your GitHub repository secrets
-   - The deployment workflow will automatically fetch your latest posts
-
-### Bluesky Features
-
-- **App Password security** - Uses Bluesky App Passwords for secure API access
-- **Smart filtering** - Shows only original posts (filters out reposts and replies)
-- **Rich content support** - Displays embedded links, images, and quote posts
-- **Infinite loop prevention** - Robust pagination with cursor validation and recursion limits
-- **Response validation** - Handles malformed API responses gracefully
-- **Responsive design** - Mobile-friendly post cards with Bluesky branding
-- **Real-time stats** - Shows likes, reposts, and reply counts
-- **Direct links** - Links back to original posts on Bluesky
-
-## Theme
-
-This site uses a custom Hugo theme called **"Maison de Freyssinet"** located in `themes/maison-de-freyssinet/`.
-
-### Theme Features
-
-- **Custom design** tailored for personal branding and social media integration
-- **Responsive layout** optimized for mobile and desktop
-- **YouTube integration** with dedicated channel pages and video cards
-- **Bluesky integration** with styled post cards and embedded content support
-- **Clean typography** using modern system fonts
-- **Modular structure** with reusable partials and layouts
-- **Performance optimized** with minimal CSS and JavaScript
-
-### Theme Development
-
-To customize the theme:
+### Local Deployment Testing
 
 ```bash
-# Edit styles
-themes/maison-de-freyssinet/static/css/style.css
+# Test full build process
+make check          # Tests + build
 
-# Modify layouts
-themes/maison-de-freyssinet/layouts/
-
-# Update partials
-themes/maison-de-freyssinet/layouts/partials/
-
-# Add assets
-themes/maison-de-freyssinet/static/
+# Test with real data
+make fetch-all      # Fetch all social media
+make build          # Build production site
 ```
 
-The theme is designed to be easily customizable while maintaining all social media integration functionality.
+</details>
 
-## Testing
+## 📚 Documentation
 
-The project includes comprehensive unit tests for all integrations with **93% code coverage**:
+### Quick Links
 
-```bash
-# Run all tests
-make test
+- **[Testing Guide](TESTING.md)** - Comprehensive testing documentation
+- **[Contributing Guide](CONTRIBUTING.md)** - Development workflow and standards
+- **[Makefile Commands](#development)** - `make help` for full list
 
-# Run tests with coverage report
-make test-coverage
+### Project Structure
 
-# Run tests with coverage validation (fails if below 85%)
-make test-coverage-ci
-
-# Run tests verbosely  
-make test-verbose
-
-# Run tests for specific file
-make test-file FILE=test_bluesky_fetcher.py
-
-# Run tests matching a pattern (most flexible)
-make test-match PATTERN=bluesky      # All Bluesky tests
-make test-match PATTERN=youtube      # All YouTube tests  
-make test-match PATTERN=pagination   # Pagination-related tests
-make test-match PATTERN=embed        # Embed processing tests
+```
+defreyssi.net/
+├── scripts/                    # Data fetching scripts
+├── themes/maison-de-freyssinet/ # Custom Hugo theme  
+├── content/                    # Hugo content
+├── config/                     # Configuration files
+├── tests/                      # Test suite (93% coverage)
+└── .github/workflows/          # CI/CD pipelines
 ```
 
-### Test Coverage
+### Key Features Deep Dive
 
-- **Current Coverage**: 93% (maintained automatically via CI)
-- **Minimum Required**: 85% (builds fail below this threshold)
-- **YouTube Integration**: 14 tests covering API parsing, duplicate filtering, live stream detection, error handling
-- **Bluesky Integration**: 20 tests covering AT Protocol API, post filtering, embed processing, infinite loop prevention
-- **Configuration**: Tests for proper config file handling and error cases
-- **Infinite Loop Prevention**: Tests for cursor validation, recursion limits, and malformed response handling
-- **Data Generation**: Tests for Hugo data file creation and validation
+<details>
+<summary>📺 YouTube Integration Details</summary>
+
+- **Channel Management:** Configure multiple channels in `config/youtube-channels.yaml`
+- **Content Filtering:** Automatic duplicate removal and smart filtering
+- **Live Streams:** Detection and status tracking for live/upcoming streams
+- **URL Generation:** Clean URLs using channel names (`/youtube/channel-name/`)
+- **SEO Optimization:** Static content generation for search engines
+
+</details>
+
+<details>
+<summary>🦋 Bluesky Integration Details</summary>
+
+- **AT Protocol:** Native integration with Bluesky's AT Protocol
+- **Security:** App Password authentication (not main password)
+- **Content Processing:** Rich embed support for links, images, quotes
+- **Reliability:** Infinite loop prevention with cursor validation
+- **Performance:** Efficient pagination with safety limits
+
+</details>
 
 ### Continuous Integration
 
-The project uses GitHub Actions with automatic coverage validation:
-- **All pushes and PRs** trigger comprehensive test suites
-- **Coverage below 85%** fails the build automatically
-- **Multiple Python versions** (3.11, 3.12) tested for compatibility
+- **Automated Testing:** All pushes/PRs trigger comprehensive test suites
+- **Coverage Enforcement:** Builds fail if coverage drops below 85%
+- **Multi-Python Testing:** Compatibility tested across Python 3.11 and 3.12
+- **Quality Gates:** Code must pass all checks before deployment
 
-## Development Workflow
+---
 
-```bash
-# Full development setup
-make setup                    # Set up virtual environment
-make test                    # Run all tests
-make fetch-all               # Fetch all social media data
-make serve                   # Start development server
+## Getting Help
 
-# Quick development cycle
-make quick-test              # Fast test run
-make dev                     # Fetch data and serve
-make check                   # Run tests + build
+- **📖 Documentation:** Check [TESTING.md](TESTING.md) and [CONTRIBUTING.md](CONTRIBUTING.md)
+- **🐛 Issues:** [Create an issue](https://github.com/samsoir/defreyssi.net-v2/issues) 
+- **💡 Questions:** Include error messages and steps to reproduce
 
-# Cleanup
-make clean                   # Clean build artifacts
-make clean-test-data         # Clean any test data leaks
-make clean-all               # Clean everything including venv
-```
+Built with ❤️ using [Hugo](https://gohugo.io/) and deployed to [Linode Object Storage](https://www.linode.com/products/object-storage/).
