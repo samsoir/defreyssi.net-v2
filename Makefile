@@ -18,7 +18,7 @@ YELLOW := \033[0;33m
 BLUE := \033[0;34m
 NC := \033[0m # No Color
 
-.PHONY: help install test test-verbose clean serve build fetch-youtube dev setup
+.PHONY: help install test test-verbose test-coverage test-file test-match clean serve build fetch-youtube dev setup
 
 help: ## Show this help message
 	@echo "$(BLUE)defreyssi.net Hugo Site$(NC)"
@@ -65,6 +65,30 @@ test-coverage: ## Run tests with coverage report
 	fi
 	@echo "$(YELLOW)Running tests with coverage...$(NC)"
 	PYTHONPATH=scripts $(PYTEST) tests/ --cov=scripts --cov-report=term-missing
+
+test-file: ## Run tests for a specific file (usage: make test-file FILE=test_bluesky_fetcher.py)
+	@if [ ! -d "$(VENV_DIR)" ]; then \
+		echo "$(RED)Error: Virtual environment not found. Run 'make setup' first.$(NC)"; \
+		exit 1; \
+	fi
+	@if [ -z "$(FILE)" ]; then \
+		echo "$(RED)Error: FILE parameter required. Usage: make test-file FILE=test_bluesky_fetcher.py$(NC)"; \
+		exit 1; \
+	fi
+	@echo "$(YELLOW)Running tests for $(FILE)...$(NC)"
+	PYTHONPATH=scripts $(PYTEST) tests/$(FILE) -v
+
+test-match: ## Run tests matching a pattern (usage: make test-match PATTERN=bluesky)
+	@if [ ! -d "$(VENV_DIR)" ]; then \
+		echo "$(RED)Error: Virtual environment not found. Run 'make setup' first.$(NC)"; \
+		exit 1; \
+	fi
+	@if [ -z "$(PATTERN)" ]; then \
+		echo "$(RED)Error: PATTERN parameter required. Usage: make test-match PATTERN=bluesky$(NC)"; \
+		exit 1; \
+	fi
+	@echo "$(YELLOW)Running tests matching pattern '$(PATTERN)'...$(NC)"
+	PYTHONPATH=scripts $(PYTEST) tests/ -k "$(PATTERN)" -v
 
 fetch-youtube: ## Fetch latest YouTube data (requires YOUTUBE_API_KEY)
 	@if [ ! -d "$(VENV_DIR)" ]; then \

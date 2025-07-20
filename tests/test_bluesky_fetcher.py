@@ -4,7 +4,7 @@ import json
 import os
 import tempfile
 import shutil
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import Mock, patch, MagicMock, PropertyMock
 from datetime import datetime, timezone
 import pytest
 
@@ -104,7 +104,8 @@ class TestBlueskyFetcher:
         mock_client.get_author_feed.assert_called_once_with(
             actor='test.bsky.social',
             filter='posts_no_replies',
-            limit=10
+            limit=10,
+            cursor=None
         )
     
     @patch.object(fetch_bluesky_data, 'Client')
@@ -217,6 +218,8 @@ class TestBlueskyFetcher:
         mock_embed.record.author.handle = 'other.bsky.social'
         mock_embed.record.value = Mock()
         mock_embed.record.value.text = 'Original quoted post'
+        # Add embeds attribute but set to None to avoid nested processing
+        mock_embed.record.embeds = None
         
         mock_client = Mock()
         mock_client_class.return_value = mock_client
@@ -316,3 +319,203 @@ class TestBlueskyFetcher:
         # The method should return empty list when API fails, not raise exception
         posts = fetcher.get_user_posts('test.bsky.social')
         assert posts == []
+    
+    @patch.object(fetch_bluesky_data, 'Client')
+    def test_pagination_cursor_loop_prevention(self, mock_client_class):
+        """Test that pagination stops when cursors repeat (infinite loop prevention)"""
+        mock_client = Mock()
+        
+        # Mock responses that would create a cursor loop
+        # First response - empty but valid
+        mock_response1 = Mock()
+        mock_response1.feed = []  # Empty feed but still a list
+        mock_response1.cursor = "cursor1"
+        
+        # Second response - same cursor should trigger loop detection
+        mock_response2 = Mock() 
+        mock_response2.feed = []
+        mock_response2.cursor = "cursor1"  # Same cursor - should trigger loop detection
+        
+        mock_client.get_author_feed.side_effect = [mock_response1, mock_response2]
+        mock_client_class.return_value = mock_client
+        
+        fetcher = BlueskyFetcher('test.bsky.social', 'test-app-password')
+        posts = fetcher.get_user_posts('test.bsky.social', limit=50, enable_pagination=True)
+        
+        # Should stop pagination due to cursor loop detection
+        assert posts == []
+        # Should make 2 requests before detecting the loop
+        assert mock_client.get_author_feed.call_count == 2
+    
+    @patch.object(fetch_bluesky_data, 'Client')
+    def test_pagination_max_requests_limit(self, mock_client_class):
+        """Test that pagination stops after maximum requests to prevent infinite loops"""
+        mock_client = Mock()
+        
+        # Create responses that would continue indefinitely
+        def create_mock_response(cursor_suffix):
+            mock_response = Mock()
+            mock_response.feed = []  # Empty feed to ensure no posts are processed
+            mock_response.cursor = f"cursor{cursor_suffix}"
+            return mock_response
+        
+        # Create 15 different responses (more than max_requests=10)
+        mock_responses = [create_mock_response(i) for i in range(15)]
+        mock_client.get_author_feed.side_effect = mock_responses
+        mock_client_class.return_value = mock_client
+        
+        fetcher = BlueskyFetcher('test.bsky.social', 'test-app-password')
+        posts = fetcher.get_user_posts('test.bsky.social', limit=100, enable_pagination=True)
+        
+        # Should stop at max_requests (10) due to safety limit
+        assert posts == []
+        assert mock_client.get_author_feed.call_count == 10
+    
+    @patch.object(fetch_bluesky_data, 'Client')
+    def test_embed_recursion_depth_limit(self, mock_client_class):
+        """Test that embed processing prevents infinite recursion"""
+        mock_client = Mock()
+        mock_client_class.return_value = mock_client
+        
+        # Create a deeply nested embed structure
+        def create_nested_embed(depth):
+            mock_embed = Mock(spec=['record'])
+            mock_embed.__class__.__name__ = 'Record'
+            mock_embed.record = Mock()
+            mock_embed.record.uri = f'at://test/depth{depth}'
+            mock_embed.record.author = Mock()
+            mock_embed.record.author.handle = 'test.bsky.social'
+            mock_embed.record.value = Mock()
+            mock_embed.record.value.text = f'Nested post at depth {depth}'
+            
+            if depth > 0:
+                # Create nested embeds
+                mock_embed.record.embeds = [create_nested_embed(depth - 1)]
+            else:
+                mock_embed.record.embeds = None
+            
+            return mock_embed
+        
+        fetcher = BlueskyFetcher('test.bsky.social', 'test-app-password')
+        
+        # Create an embed with 5 levels of nesting (exceeds default max_depth=3)
+        deep_embed = create_nested_embed(5)
+        result = fetcher.process_embed(deep_embed)
+        
+        # Should process up to max_depth, then return depth limit exceeded
+        assert result['type'] == 'Record'
+        assert 'nested_embeds' in result['data']
+        
+        # Navigate to the deepest level that should be processed
+        nested = result['data']['nested_embeds'][0]
+        while 'nested_embeds' in nested['data']:
+            nested = nested['data']['nested_embeds'][0]
+        
+        # The deepest level should be a depth limit exceeded message
+        assert nested['type'] == 'DepthLimitExceeded'
+        assert 'Maximum embed depth' in nested['data']['message']
+    
+    @patch.object(fetch_bluesky_data, 'Client')
+    def test_invalid_api_response_handling(self, mock_client_class):
+        """Test handling of malformed API responses"""
+        mock_client = Mock()
+        
+        # Test missing feed attribute
+        mock_response = Mock(spec=[])  # No feed attribute
+        mock_client.get_author_feed.return_value = mock_response
+        mock_client_class.return_value = mock_client
+        
+        fetcher = BlueskyFetcher('test.bsky.social', 'test-app-password')
+        posts = fetcher.get_user_posts('test.bsky.social')
+        
+        assert posts == []
+    
+    @patch.object(fetch_bluesky_data, 'Client')
+    def test_invalid_embed_object_handling(self, mock_client_class):
+        """Test handling of invalid embed objects"""
+        mock_client = Mock()
+        mock_client_class.return_value = mock_client
+        
+        fetcher = BlueskyFetcher('test.bsky.social', 'test-app-password')
+        
+        # Test None embed
+        result = fetcher.process_embed(None)
+        assert result['type'] == 'InvalidEmbed'
+        assert 'Invalid or missing embed object' in result['data']['message']
+        
+        # Test embed without __class__ attribute - strings have __class__ so use a different invalid object
+        invalid_embed = 42  # Number doesn't have the attributes we expect
+        result = fetcher.process_embed(invalid_embed)
+        # This should not be InvalidEmbed since numbers have __class__, it should be Unknown embed type
+        assert result['type'] == 'int'  # The class name
+        assert 'Unknown embed type' in result['data']['message']
+    
+    @patch.object(fetch_bluesky_data, 'Client')
+    def test_embed_processing_error_handling(self, mock_client_class):
+        """Test graceful handling of embed processing errors"""
+        mock_client = Mock()
+        mock_client_class.return_value = mock_client
+        
+        # Create an embed that will cause an exception during processing
+        mock_embed = Mock()
+        mock_embed.__class__.__name__ = 'TestEmbed'
+        mock_embed.external = Mock()
+        # Make uri property raise an exception
+        type(mock_embed.external).uri = PropertyMock(side_effect=Exception("Processing error"))
+        
+        fetcher = BlueskyFetcher('test.bsky.social', 'test-app-password')
+        result = fetcher.process_embed(mock_embed)
+        
+        assert result['type'] == 'ProcessingError'
+        assert 'Error processing embed' in result['data']['message']
+        assert result['data']['original_type'] == 'TestEmbed'
+    
+    @patch.object(fetch_bluesky_data, 'Client')
+    def test_connect_failure_handling(self, mock_client_class):
+        """Test handling of connection failures"""
+        mock_client = Mock()
+        mock_client.login.side_effect = Exception("Authentication failed")
+        mock_client_class.return_value = mock_client
+        
+        fetcher = BlueskyFetcher('test.bsky.social', 'bad-password')
+        result = fetcher.connect()
+        
+        assert result is False
+        # Note: client object is created but login fails, so it's not None
+    
+    @patch('builtins.print')
+    @patch('sys.exit')
+    @patch('pathlib.Path.exists')
+    def test_main_missing_config_file(self, mock_exists, mock_exit, mock_print):
+        """Test main function with missing config file"""
+        mock_exists.return_value = False
+        
+        with patch.dict(os.environ, {
+            'BLUESKY_USERNAME': 'test.bsky.social',
+            'BLUESKY_APP_PASSWORD': 'test-password'
+        }):
+            fetch_bluesky_data.main()
+        
+        assert mock_exit.call_count >= 1
+        mock_exit.assert_called_with(1)
+        # Check that error message was printed
+        mock_print.assert_any_call("Error: config/bluesky-config.yaml not found")
+    
+    @patch('builtins.print')
+    @patch('sys.exit')
+    @patch('yaml.safe_load')
+    @patch('builtins.open')
+    @patch('pathlib.Path.exists')
+    def test_main_invalid_handle_in_config(self, mock_exists, mock_open, mock_yaml_load, mock_exit, mock_print):
+        """Test main function with invalid handle in config"""
+        mock_exists.return_value = True
+        mock_yaml_load.return_value = {'handle': 'your-handle.bsky.social', 'max_posts': 10}
+        
+        with patch.dict(os.environ, {
+            'BLUESKY_USERNAME': 'test.bsky.social',
+            'BLUESKY_APP_PASSWORD': 'test-password'
+        }):
+            fetch_bluesky_data.main()
+        
+        mock_exit.assert_called_once_with(1)
+        mock_print.assert_any_call("Error: Please update 'handle' in bluesky-config.yaml with your actual Bluesky handle")

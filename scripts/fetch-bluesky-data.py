@@ -44,59 +44,117 @@ class BlueskyFetcher:
             print("Generate one at: https://bsky.app/settings/app-passwords")
             return False
     
-    def get_user_posts(self, handle, limit=10):
-        """Fetch recent posts from a user."""
+    def get_user_posts(self, handle, limit=10, enable_pagination=False):
+        """
+        Fetch recent posts from a user.
+        
+        Args:
+            handle: User handle to fetch posts from
+            limit: Maximum number of posts per request (default: 10)
+            enable_pagination: If True, fetch all available posts up to limit using pagination
+        """
         if not self.client:
             if not self.connect():
                 return []
                 
         try:
-            # Get author feed with posts only (no replies by default)
-            response = self.client.get_author_feed(
-                actor=handle, 
-                filter='posts_no_replies',  # Only original posts, no replies
-                limit=limit
-            )
-            
             posts = []
-            for feed_item in response.feed:
-                post = feed_item.post
-                record = post.record
-                
-                # Skip reposts - only include original posts
-                if feed_item.reason:
-                    continue
+            cursor = None
+            seen_cursors = set()  # Track cursors to prevent infinite loops
+            max_requests = 10  # Safety limit for pagination requests
+            request_count = 0
+            
+            while True:
+                # Safety check: prevent infinite pagination
+                if request_count >= max_requests:
+                    print(f"Warning: Reached maximum pagination requests ({max_requests}), stopping")
+                    break
                     
-                post_data = {
-                    'uri': post.uri,
-                    'cid': post.cid,
-                    'text': record.text,
-                    'created_at': record.created_at,
-                    'author': {
-                        'handle': post.author.handle,
-                        'display_name': post.author.display_name or post.author.handle,
-                        'avatar': post.author.avatar
-                    },
-                    'like_count': post.like_count or 0,
-                    'repost_count': post.repost_count or 0,
-                    'reply_count': post.reply_count or 0,
-                    'url': f"https://bsky.app/profile/{post.author.handle}/post/{post.uri.split('/')[-1]}"
-                }
+                # Validate cursor hasn't been seen before (infinite loop prevention)
+                if cursor and cursor in seen_cursors:
+                    print(f"Warning: Detected cursor loop, stopping pagination")
+                    break
+                    
+                if cursor:
+                    seen_cursors.add(cursor)
                 
-                # Extract links and mentions from text
-                post_data['links'] = self.extract_links(record.text)
-                post_data['mentions'] = self.extract_mentions(record.text)
+                # Get author feed with posts only (no replies by default)
+                response = self.client.get_author_feed(
+                    actor=handle, 
+                    filter='posts_no_replies',  # Only original posts, no replies
+                    limit=min(limit - len(posts), 100) if enable_pagination else limit,
+                    cursor=cursor
+                )
                 
-                # Handle embedded content (images, external links, etc.)
-                if hasattr(record, 'embed') and record.embed:
-                    post_data['embed'] = self.process_embed(record.embed)
+                # Validate response structure
+                if not hasattr(response, 'feed') or response.feed is None:
+                    print("Warning: Invalid API response")
+                    break
+                    
+                for feed_item in response.feed:
+                    # Validate feed item structure
+                    if not hasattr(feed_item, 'post') or not feed_item.post:
+                        continue
+                        
+                    post = feed_item.post
+                    
+                    # Validate post structure
+                    if not hasattr(post, 'record') or not post.record:
+                        continue
+                        
+                    record = post.record
+                    
+                    # Skip reposts - only include original posts
+                    if feed_item.reason:
+                        continue
+                        
+                    post_data = {
+                        'uri': post.uri,
+                        'cid': post.cid,
+                        'text': record.text,
+                        'created_at': record.created_at,
+                        'author': {
+                            'handle': post.author.handle,
+                            'display_name': post.author.display_name or post.author.handle,
+                            'avatar': post.author.avatar
+                        },
+                        'like_count': post.like_count or 0,
+                        'repost_count': post.repost_count or 0,
+                        'reply_count': post.reply_count or 0,
+                        'url': f"https://bsky.app/profile/{post.author.handle}/post/{post.uri.split('/')[-1]}"
+                    }
+                    
+                    # Extract links and mentions from text
+                    post_data['links'] = self.extract_links(record.text)
+                    post_data['mentions'] = self.extract_mentions(record.text)
+                    
+                    # Handle embedded content (images, external links, etc.)
+                    if hasattr(record, 'embed') and record.embed:
+                        post_data['embed'] = self.process_embed(record.embed, max_depth=3)
+                    
+                    posts.append(post_data)
+                    
+                    # Stop if we've reached the desired limit
+                    if len(posts) >= limit:
+                        break
                 
-                posts.append(post_data)
+                request_count += 1
+                
+                # Check if we should continue pagination
+                if not enable_pagination or len(posts) >= limit:
+                    break
+                    
+                # Get next cursor for pagination
+                next_cursor = getattr(response, 'cursor', None)
+                if not next_cursor or next_cursor == cursor:
+                    break  # No more pages or same cursor (API issue)
+                    
+                cursor = next_cursor
                 
             # Sort by creation date (newest first)
             posts.sort(key=lambda x: x['created_at'], reverse=True)
             
-            return posts
+            return posts[:limit]  # Ensure we don't exceed requested limit
             
         except Exception as e:
             print(f"Error fetching posts for {handle}: {e}")
@@ -112,41 +170,90 @@ class BlueskyFetcher:
         mention_pattern = r'@([a-zA-Z0-9._-]+\.bsky\.social|[a-zA-Z0-9._-]+)'
         return re.findall(mention_pattern, text)
     
-    def process_embed(self, embed):
-        """Process embedded content in posts."""
+    def process_embed(self, embed, max_depth=3, current_depth=0):
+        """
+        Process embedded content in posts with recursion depth limits.
+        
+        Args:
+            embed: The embed object to process
+            max_depth: Maximum recursion depth to prevent infinite loops (default: 3)
+            current_depth: Current recursion depth (internal use)
+        """
+        # Prevent infinite recursion
+        if current_depth >= max_depth:
+            return {
+                'type': 'DepthLimitExceeded',
+                'data': {'message': f'Maximum embed depth ({max_depth}) exceeded'}
+            }
+        
+        # Validate embed object
+        if not embed or not hasattr(embed, '__class__'):
+            return {
+                'type': 'InvalidEmbed',
+                'data': {'message': 'Invalid or missing embed object'}
+            }
+        
         embed_data = {
             'type': embed.__class__.__name__,
             'data': {}
         }
         
-        # Handle different embed types
-        if hasattr(embed, 'external') and embed.external:
-            # External link embed
-            external = embed.external
-            embed_data['data'] = {
-                'uri': external.uri,
-                'title': external.title,
-                'description': external.description,
-                'thumb': external.thumb
-            }
-        elif hasattr(embed, 'images') and embed.images:
-            # Image embed
-            embed_data['data'] = {
-                'images': [
-                    {
-                        'alt': img.alt,
-                        'thumb': img.thumb,
-                        'fullsize': img.fullsize
-                    } for img in embed.images
-                ]
-            }
-        elif hasattr(embed, 'record') and embed.record:
-            # Quote post embed
-            quoted = embed.record
-            embed_data['data'] = {
-                'uri': quoted.uri,
-                'author': quoted.author.handle if hasattr(quoted, 'author') else None,
-                'text': quoted.value.text if hasattr(quoted, 'value') else None
+        try:
+            # Handle different embed types
+            if hasattr(embed, 'external') and embed.external:
+                # External link embed
+                external = embed.external
+                embed_data['data'] = {
+                    'uri': getattr(external, 'uri', None),
+                    'title': getattr(external, 'title', None),
+                    'description': getattr(external, 'description', None),
+                    'thumb': getattr(external, 'thumb', None)
+                }
+            elif hasattr(embed, 'images') and embed.images:
+                # Image embed
+                embed_data['data'] = {
+                    'images': [
+                        {
+                            'alt': getattr(img, 'alt', ''),
+                            'thumb': getattr(img, 'thumb', None),
+                            'fullsize': getattr(img, 'fullsize', None)
+                        } for img in embed.images if img
+                    ]
+                }
+            elif hasattr(embed, 'record') and embed.record:
+                # Quote post embed - handle with recursion limit
+                quoted = embed.record
+                embed_data['data'] = {
+                    'uri': getattr(quoted, 'uri', None),
+                    'author': getattr(quoted.author, 'handle', None) if hasattr(quoted, 'author') else None,
+                    'text': getattr(quoted.value, 'text', None) if hasattr(quoted, 'value') else None
+                }
+                
+                # Recursively process nested embeds with depth tracking
+                if hasattr(quoted, 'embeds') and quoted.embeds and current_depth < max_depth:
+                    nested_embeds = []
+                    for nested_embed in quoted.embeds[:3]:  # Limit to 3 nested embeds
+                        nested_result = self.process_embed(
+                            nested_embed, 
+                            max_depth=max_depth, 
+                            current_depth=current_depth + 1
+                        )
+                        nested_embeds.append(nested_result)
+                    embed_data['data']['nested_embeds'] = nested_embeds
+            else:
+                # Unknown embed type
+                embed_data['data'] = {
+                    'message': f'Unknown embed type: {embed.__class__.__name__}'
+                }
+                
+        except Exception as e:
+            # Handle any processing errors gracefully
+            embed_data = {
+                'type': 'ProcessingError',
+                'data': {
+                    'message': f'Error processing embed: {str(e)}',
+                    'original_type': getattr(embed.__class__, '__name__', 'Unknown') if hasattr(embed, '__class__') else 'Unknown'
+                }
             }
             
         return embed_data

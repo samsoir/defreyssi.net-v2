@@ -178,6 +178,8 @@ The site automatically fetches and displays your latest Bluesky posts on the hom
 - **App Password security** - Uses Bluesky App Passwords for secure API access
 - **Smart filtering** - Shows only original posts (filters out reposts and replies)
 - **Rich content support** - Displays embedded links, images, and quote posts
+- **Infinite loop prevention** - Robust pagination with cursor validation and recursion limits
+- **Response validation** - Handles malformed API responses gracefully
 - **Responsive design** - Mobile-friendly post cards with Bluesky branding
 - **Real-time stats** - Shows likes, reposts, and reply counts
 - **Direct links** - Links back to original posts on Bluesky
@@ -218,28 +220,34 @@ The theme is designed to be easily customizable while maintaining all social med
 
 ## Testing
 
-The project includes comprehensive unit tests for all integrations:
+The project includes comprehensive unit tests for all integrations with **93% code coverage**:
 
 ```bash
 # Run all tests
 make test
 
-# Run tests with coverage
+# Run tests with coverage report
 make test-coverage
 
-# Run tests verbosely
+# Run tests verbosely  
 make test-verbose
 
-# Run specific test file
-python -m pytest tests/test_youtube_fetcher.py -v
-python -m pytest tests/test_bluesky_fetcher.py -v
+# Run tests for specific file
+make test-file FILE=test_bluesky_fetcher.py
+
+# Run tests matching a pattern (most flexible)
+make test-match PATTERN=bluesky      # All Bluesky tests
+make test-match PATTERN=youtube      # All YouTube tests  
+make test-match PATTERN=pagination   # Pagination-related tests
+make test-match PATTERN=embed        # Embed processing tests
 ```
 
 ### Test Coverage
 
-- **YouTube Integration**: 11 tests covering API parsing, duplicate filtering, live stream detection
-- **Bluesky Integration**: 11 tests covering AT Protocol API, post filtering, embed processing
+- **YouTube Integration**: 14 tests covering API parsing, duplicate filtering, live stream detection, error handling
+- **Bluesky Integration**: 20 tests covering AT Protocol API, post filtering, embed processing, infinite loop prevention
 - **Configuration**: Tests for proper config file handling and error cases
+- **Infinite Loop Prevention**: Tests for cursor validation, recursion limits, and malformed response handling
 - **Data Generation**: Tests for Hugo data file creation and validation
 
 ## Development Workflow

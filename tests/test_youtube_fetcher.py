@@ -12,12 +12,14 @@ from pathlib import Path
 from unittest.mock import Mock, patch, MagicMock
 import sys
 import os
+import pytest
 
 # Add the scripts directory to the Python path
 scripts_dir = os.path.join(os.path.dirname(__file__), '..', 'scripts')
 sys.path.insert(0, scripts_dir)
 
 from fetch_youtube_data import YouTubeFetcher
+import fetch_youtube_data
 
 
 class TestYouTubeFetcher(unittest.TestCase):
@@ -496,6 +498,95 @@ class TestUtilityFunctions(unittest.TestCase):
             with self.subTest(input_name=input_name):
                 result = create_slug(input_name)
                 self.assertEqual(result, expected_slug)
+
+
+class TestMainFunction(unittest.TestCase):
+    """Test cases for main function and error conditions"""
+    
+    def setUp(self):
+        """Set up test environment with temporary directory"""
+        self.original_cwd = os.getcwd()
+        self.test_dir = tempfile.mkdtemp()
+        os.chdir(self.test_dir)
+        
+        # Create necessary directories
+        os.makedirs('config', exist_ok=True)
+    
+    def tearDown(self):
+        """Clean up test environment"""
+        os.chdir(self.original_cwd)
+        shutil.rmtree(self.test_dir, ignore_errors=True)
+    
+    @patch('builtins.print')
+    @patch('sys.exit')
+    def test_main_missing_api_key(self, mock_exit, mock_print):
+        """Test main function with missing YouTube API key"""
+        # Mock sys.exit to raise an exception to stop execution
+        mock_exit.side_effect = SystemExit(1)
+        
+        with pytest.raises(SystemExit):
+            with patch.dict(os.environ, {}, clear=True):
+                fetch_youtube_data.main()
+        
+        mock_exit.assert_called_once_with(1)
+        mock_print.assert_called_with("Error: YOUTUBE_API_KEY environment variable not set")
+    
+    @patch('builtins.print')
+    @patch('sys.exit')
+    @patch('pathlib.Path.exists')
+    def test_main_missing_config_file(self, mock_exists, mock_exit, mock_print):
+        """Test main function with missing config file"""
+        mock_exists.return_value = False
+        mock_exit.side_effect = SystemExit(1)
+        
+        with pytest.raises(SystemExit):
+            with patch.dict(os.environ, {'YOUTUBE_API_KEY': 'test-key'}):
+                fetch_youtube_data.main()
+        
+        mock_exit.assert_called_once_with(1)
+        # Check that error message was printed
+        mock_print.assert_any_call("Error: config/youtube-channels.yaml not found")
+    
+    @patch.object(fetch_youtube_data, 'YouTubeFetcher')
+    @patch('yaml.safe_load')
+    @patch('builtins.open')
+    @patch('pathlib.Path.exists')
+    def test_main_function_workflow(self, mock_exists, mock_open, mock_yaml_load, mock_fetcher_class):
+        """Test main function successful workflow"""
+        # Mock file operations
+        mock_exists.return_value = True
+        mock_yaml_load.return_value = {
+            'channels': [
+                {'channel_id': 'UCtest123', 'name': 'Test Channel'},
+                {'channel_id': 'UCtest456', 'name': 'Another Channel'}
+            ]
+        }
+        
+        # Mock fetcher
+        mock_fetcher = Mock()
+        mock_channel_data = {
+            'channel_title': 'Test Channel',
+            'channel_id': 'UCtest123',
+            'videos': [{'id': 'video1', 'title': 'Test Video'}]
+        }
+        mock_fetcher.get_channel_videos.return_value = mock_channel_data
+        mock_fetcher_class.return_value = mock_fetcher
+        
+        with patch.dict(os.environ, {'YOUTUBE_API_KEY': 'test-api-key'}):
+            fetch_youtube_data.main()
+        
+        # Verify fetcher was created with API key
+        mock_fetcher_class.assert_called_once_with('test-api-key')
+        
+        # Verify get_channel_videos was called for each channel
+        expected_calls = [
+            unittest.mock.call('UCtest123'),
+            unittest.mock.call('UCtest456')
+        ]
+        mock_fetcher.get_channel_videos.assert_has_calls(expected_calls)
+        
+        # Verify content generation was called
+        assert mock_fetcher.generate_hugo_content.call_count == 2
 
 
 if __name__ == '__main__':
