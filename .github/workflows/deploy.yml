@@ -47,6 +47,13 @@ jobs:
         run: |
           python scripts/fetch-youtube-data.py
       
+      - name: Fetch Bluesky data
+        env:
+          BLUESKY_USERNAME: ${{ secrets.BLUESKY_USERNAME }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+        run: |
+          python scripts/fetch-bluesky-data.py
+      
       - name: Build Hugo site
         run: hugo --minify
       

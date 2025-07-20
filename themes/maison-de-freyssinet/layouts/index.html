@@ -19,6 +19,72 @@
     </section>
     {{ end }}
 
+    <!-- Recent Bluesky Posts -->
+    {{ if .Site.Data.bluesky.posts }}
+    <section class="recent-bluesky">
+        <div class="container">
+            <h2>Latest from Bluesky 🦋</h2>
+            <div class="bluesky-posts">
+                {{ range first 3 .Site.Data.bluesky.posts }}
+                <article class="bluesky-post">
+                    <div class="post-header">
+                        <div class="author-info">
+                            {{ if .author.avatar }}
+                            <img src="{{ .author.avatar }}" alt="{{ .author.display_name }}" class="author-avatar">
+                            {{ end }}
+                            <div class="author-details">
+                                <span class="author-name">{{ .author.display_name }}</span>
+                                <span class="author-handle">@{{ .author.handle }}</span>
+                            </div>
+                        </div>
+                        <time datetime="{{ .created_at }}" class="post-time">
+                            {{ dateFormat "Jan 2, 2006" .created_at }}
+                        </time>
+                    </div>
+                    
+                    <div class="post-content">
+                        <p>{{ .text | markdownify }}</p>
+                        
+                        {{ if .embed }}
+                            {{ if eq .embed.type "External" }}
+                                <div class="embed-external">
+                                    <a href="{{ .embed.data.uri }}" target="_blank" rel="noopener">
+                                        {{ if .embed.data.thumb }}
+                                        <img src="{{ .embed.data.thumb }}" alt="Link preview" class="embed-thumb">
+                                        {{ end }}
+                                        <div class="embed-info">
+                                            <h4>{{ .embed.data.title }}</h4>
+                                            <p>{{ .embed.data.description }}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            {{ else if eq .embed.type "Images" }}
+                                <div class="embed-images">
+                                    {{ range .embed.data.images }}
+                                    <img src="{{ .fullsize }}" alt="{{ .alt }}" loading="lazy">
+                                    {{ end }}
+                                </div>
+                            {{ end }}
+                        {{ end }}
+                    </div>
+                    
+                    <div class="post-footer">
+                        <div class="post-stats">
+                            <span class="stat">{{ .like_count }} likes</span>
+                            <span class="stat">{{ .repost_count }} reposts</span>
+                            <span class="stat">{{ .reply_count }} replies</span>
+                        </div>
+                        <a href="{{ .url }}" target="_blank" rel="noopener" class="view-original">
+                            View on Bluesky →
+                        </a>
+                    </div>
+                </article>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+    {{ end }}
+
     <!-- Recent YouTube Videos -->
     {{ range .Site.Data.youtube }}
     {{ $channel := . }}

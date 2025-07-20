@@ -80,6 +80,27 @@ fetch-youtube: ## Fetch latest YouTube data (requires YOUTUBE_API_KEY)
 	$(PYTHON) scripts/fetch-youtube-data.py
 	@echo "$(GREEN)✓ YouTube data updated$(NC)"
 
+fetch-bluesky: ## Fetch latest Bluesky posts (requires BLUESKY_USERNAME and BLUESKY_APP_PASSWORD)
+	@if [ ! -d "$(VENV_DIR)" ]; then \
+		echo "$(RED)Error: Virtual environment not found. Run 'make setup' first.$(NC)"; \
+		exit 1; \
+	fi
+	@if [ -z "$$BLUESKY_USERNAME" ] || [ -z "$$BLUESKY_APP_PASSWORD" ]; then \
+		echo "$(RED)Error: BLUESKY_USERNAME and BLUESKY_APP_PASSWORD environment variables not set$(NC)"; \
+		echo "$(YELLOW)Set them with:$(NC)"; \
+		echo "  export BLUESKY_USERNAME=\"your-handle.bsky.social\""; \
+		echo "  export BLUESKY_APP_PASSWORD=\"your-app-password\""; \
+		echo "$(BLUE)IMPORTANT: Use an App Password, not your main password!$(NC)"; \
+		echo "$(BLUE)Generate one at: https://bsky.app/settings/app-passwords$(NC)"; \
+		exit 1; \
+	fi
+	@echo "$(YELLOW)Fetching Bluesky data...$(NC)"
+	$(PYTHON) scripts/fetch-bluesky-data.py
+	@echo "$(GREEN)✓ Bluesky data updated$(NC)"
+
+fetch-all: ## Fetch all social media data (YouTube + Bluesky)
+fetch-all: fetch-youtube fetch-bluesky
+
 build: ## Build Hugo site (production)
 	@echo "$(YELLOW)Building Hugo site...$(NC)"
 	$(HUGO) --minify
@@ -92,8 +113,10 @@ serve: ## Start Hugo development server
 
 serve-with-youtube: fetch-youtube serve ## Fetch YouTube data and start development server
 
-dev: ## Full development workflow (fetch YouTube + serve)
-dev: serve-with-youtube
+serve-with-all: fetch-all serve ## Fetch all social media data and start development server
+
+dev: ## Full development workflow (fetch all social media + serve)
+dev: serve-with-all
 
 clean: ## Clean build artifacts and caches
 	@echo "$(YELLOW)Cleaning build artifacts...$(NC)"
